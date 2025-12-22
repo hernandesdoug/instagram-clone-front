@@ -39,21 +39,21 @@ const Login: React.FC = () => {
                 </LandingImg>
                 <LoginPage>
                     <h1>Instagram</h1>
-                    <input type="text"
+                    <Inputs type="text"
                     id="usuario" 
                     placeholder="Telefone, nome de usuário ou email"
                     value={dadosEntrada.usuario}
                     onChange={handleChange}
                     required
                     />
-                    <input type="password" 
+                    <Inputs type="password" 
                     id="password"
                     placeholder="Senha"
                     value={dadosEntrada.senha}
                     onChange={handleChange}
                     required
                     />
-                    <button onClick={handleLogin}>Entrar</button>
+                    <BtnEntrar onClick={handleLogin}>Entrar</BtnEntrar>
                     <a href="">Esqueceu a senha?</a>
                     <p>Não tem uma conta? <a href=""> Cadastre-se</a></p>
                 </LoginPage>
@@ -81,3 +81,18 @@ const LoginPage = styled.div`
     justify-content: center;
     margin: 10px;
 `;
+
+const Inputs = styled.input`
+  width: 250px;
+  height: 30px;
+  border-radius: 0.2rem;
+`;
+
+const BtnEntrar = styled.button`
+  width: 250px;
+  height: 30px;
+  border-radius: 0.4rem;
+  background-color: #00a2ff;
+  color: #ffffff;
+`;
+
