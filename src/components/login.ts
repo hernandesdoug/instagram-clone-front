@@ -1,5 +1,4 @@
-export interface LoginProps {
+export interface loginProps {
     usuario: string;
     senha: string;
-    logIn: () => void;
 }
