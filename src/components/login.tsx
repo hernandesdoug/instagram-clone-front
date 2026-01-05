@@ -1,5 +1,6 @@
 import type { loginProps } from "./login.ts";
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Footer from "./footer.tsx";
 import api from "../services/api.ts";
 import landing from "../assets/landing-3x.png"
@@ -55,7 +56,7 @@ const Login: React.FC = () => {
                     />
                     <BtnEntrar onClick={handleLogin}>Entrar</BtnEntrar>
                     <a href="">Esqueceu a senha?</a>
-                    <p>Não tem uma conta? <a href=""> Cadastre-se</a></p>
+                    <p>Não tem uma conta? <Link to={"/cadastro"}> Cadastre-se</Link></p>
                 </LoginPage>
             </Container>
             <Footer></Footer>
