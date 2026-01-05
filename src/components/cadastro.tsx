@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Footer from "./footer.tsx";
 import api from "../services/api.ts";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Cadastro: React.FC = () => {
     const [dadosCadastro, setDadosCadastro] = useState<cadastroProps>({
@@ -25,7 +26,7 @@ const Cadastro: React.FC = () => {
             if (response.status === 200) {
 
             } else {
-                console.log("Login Failed!", response.status);
+                console.log("Sign Up Failed!", response.status);
             }
         } catch (error) {
             console.error("Unexpected error!", error);
@@ -68,7 +69,7 @@ const Cadastro: React.FC = () => {
                     <BtnCadastrar onClick={handleCadastro}>Cadastre-se</BtnCadastrar>
                     <div>
                         <p>Tem uma conta?</p>
-                        <a href="">Conecte-se</a>
+                        <Link to={"/"}>Conecte-se</Link>
                     </div>
                 </CadastroForm>
                 <Footer></Footer>
