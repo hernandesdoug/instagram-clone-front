@@ -1,4 +1,5 @@
 import type { cadastroProps } from "./cadastro.ts";
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import Footer from "./footer.tsx";
 import api from "../services/api.ts";
@@ -6,25 +7,18 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Cadastro: React.FC = () => {
-    const [dadosCadastro, setDadosCadastro] = useState<cadastroProps>({
-        usuario: "",
-        senha: "",
-        nomeCompleto: "",
-        nomeUsuario: ""
-    });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setDadosCadastro(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+    const [usuario, setUsuario] = useState<string>();
+    const [senha, setSenha] = useState<string>();
+    const [nomeCompleto, setNomeCompleto] = useState<string>();
+    const [nomeUsuario, setNomeUsuario] = useState<string>();
+    const navigate = useNavigate();
     const handleCadastro = async () => {
+        
         try {
-            const response = await api.post("/login", {});
-            if (response.status === 200) {
-
+            const response = await api.post<cadastroProps>("/user", {usuario, senha, nomeCompleto, nomeUsuario});
+            if (response.status === 201) {
+                console.log(response.data)         
+                navigate('/usuario');
             } else {
                 console.log("Sign Up Failed!", response.status);
             }
@@ -41,29 +35,29 @@ const Cadastro: React.FC = () => {
                     <Inputs type="text"
                         id="usuario"
                         placeholder="Número do celular ou email"
-                        value={dadosCadastro.usuario}
-                        onChange={handleChange}
+                        value={usuario}
+                        onChange={e => setUsuario(e.target.value)}
                         required
                     />
                     <Inputs type="password"
                         id="password"
                         placeholder="Senha"
-                        value={dadosCadastro.senha}
-                        onChange={handleChange}
+                        value={senha}
+                        onChange={e => setSenha(e.target.value)}
                         required
                     />
                     <Inputs type="text"
                         id="usuario"
                         placeholder="Nome completo"
-                        value={dadosCadastro.nomeCompleto}
-                        onChange={handleChange}
+                        value={nomeCompleto}
+                        onChange={e => setNomeCompleto(e.target.value)}
                         required
                     />
                     <Inputs type="text"
                         id="usuario"
                         placeholder="Nome de usuário"
-                        value={dadosCadastro.nomeUsuario}
-                        onChange={handleChange}
+                        value={nomeUsuario}
+                        onChange={e => setNomeUsuario(e.target.value)}
                         required
                     />
                     <BtnCadastrar onClick={handleCadastro}>Cadastre-se</BtnCadastrar>

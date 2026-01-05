@@ -1,4 +1,5 @@
 import type { loginProps } from "./login.ts";
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from "./footer.tsx";
@@ -7,24 +8,17 @@ import landing from "../assets/landing-3x.png"
 import styled from "styled-components";
 
 const Login: React.FC = () => {
-    const [dadosEntrada, setDadosEntrada] = useState<loginProps>({
-        usuario: "",
-        senha: ""
-    });
-   
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setDadosEntrada(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
+    const [usuario, setUsuario] = useState<string>();
+    const [senha, setSenha] = useState<string>();
+    const navigate = useNavigate();
     const handleLogin = async () => {
         try {
-            const response = await api.post("/login", {});
-            if (response.status === 200) {
+            const response = await api.post<loginProps>("/user/login", { usuario, senha });
 
+            if (response.status === 201) {
+                console.log(response.data);
+                
+                navigate("/usuario");
             } else {
                 console.log("Login Failed!", response.status);
             }
@@ -41,18 +35,18 @@ const Login: React.FC = () => {
                 <LoginPage>
                     <h1>Instagram</h1>
                     <Inputs type="text"
-                    id="usuario" 
-                    placeholder="Telefone, nome de usuário ou email"
-                    value={dadosEntrada.usuario}
-                    onChange={handleChange}
-                    required
+                        id="usuario"
+                        placeholder="Telefone, nome de usuário ou email"
+                        value={usuario}
+                        onChange={e => setUsuario(e.target.value)}
+                        required
                     />
-                    <Inputs type="password" 
-                    id="password"
-                    placeholder="Senha"
-                    value={dadosEntrada.senha}
-                    onChange={handleChange}
-                    required
+                    <Inputs type="password"
+                        id="password"
+                        placeholder="Senha"
+                        value={senha}
+                        onChange={e => setSenha(e.target.value)}
+                        required
                     />
                     <BtnEntrar onClick={handleLogin}>Entrar</BtnEntrar>
                     <a href="">Esqueceu a senha?</a>
