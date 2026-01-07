@@ -28,6 +28,11 @@ const Usuario: React.FC = () => {
                             value={usuarioBio}
                             onChange={e => setUsuarioBio(e.target.value)}
                         />
+                        <div>
+                            <button>Salvar</button>
+                            <button>Cancelar</button>
+                        </div>
+
                     </div>
 
                 ) : (
@@ -39,11 +44,22 @@ const Usuario: React.FC = () => {
 
                         <Info>
                             <ImgPerfil src="" alt="" />
-                            <p>Bio</p>
-                            <p>postagens, seguidores, seguindo</p>
-                            <button onClick={altCampos}>editar perfil</button>
-                            <button>mensagens</button>
+                            <NomeUsuario>
+                                <span>nome do Usuario</span>
+                                <Dados>
+                                    <span> postagens</span>
+                                    <span> seguidores</span>
+                                    <span> seguindo</span>
+                                </Dados>
+                            </NomeUsuario>
                         </Info>
+                        <BioUsuario>
+                            <p>Bio</p>
+                            <div>
+                                <button onClick={altCampos}>editar perfil</button>
+                                <button>mensagens</button>
+                            </div>
+                        </BioUsuario>
                         <div>
 
                         </div>
@@ -76,12 +92,33 @@ const Perfil = styled.div`
 `;
 
 const Info = styled.div`
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 30px;
 `;
 
 const ImgPerfil = styled.img`
-  width: 90px;
-  height: 90px;
-  border-radius: 1px solid #000 50%;
-  margin: 0 auto;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid #000 ;
+  object-fit: cover;
 `;
+
+const BioUsuario = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const NomeUsuario = styled.div`
+display: flex;
+flex-direction: column;
+gap: 25px;
+`;
+
+const Dados = styled.div`
+display: flex;
+gap: 25px;
+`;
+
+
