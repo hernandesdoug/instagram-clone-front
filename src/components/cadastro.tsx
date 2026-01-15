@@ -47,14 +47,14 @@ const Cadastro: React.FC = () => {
                         required
                     />
                     <Inputs type="text"
-                        id="usuario"
+                        id="nome-completo"
                         placeholder="Nome completo"
                         value={nomeCompleto}
                         onChange={e => setNomeCompleto(e.target.value)}
                         required
                     />
                     <Inputs type="text"
-                        id="usuario"
+                        id="nome-usuario"
                         placeholder="Nome de usuário"
                         value={nomeUsuario}
                         onChange={e => setNomeUsuario(e.target.value)}

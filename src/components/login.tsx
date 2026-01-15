@@ -1,7 +1,6 @@
 import type { loginProps } from "./login.ts";
-import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Footer from "./footer.tsx";
 import api from "../services/api.ts";
 import landing from "../assets/landing-3x.png"
@@ -17,10 +16,9 @@ const Login: React.FC = () => {
 
             if (response.status === 201) {
                 console.log(response.data);
-                
-                navigate("/usuario");
+                navigate(`/usuario/${response.data.NOMEUSUARIO}`);
             } else {
-                console.log("Login Failed!", response.status);
+                console.log("User data Failed!", response.status);
             }
         } catch (error) {
             console.error("Unexpected error!", error);
@@ -66,6 +64,7 @@ const Container = styled.div`
 
 const LandingImg = styled.div`
    width: 50%;
+   object-fit: cover;
 `;
 const LoginPage = styled.div`
     width: 50%;

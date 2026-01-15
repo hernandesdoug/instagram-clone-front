@@ -1,4 +1,4 @@
 export interface loginProps {
-    usuario: string;
-    senha: string;
+    ID: number;
+    NOMEUSUARIO: string;
 }

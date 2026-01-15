@@ -1,15 +1,23 @@
 import styled from "styled-components";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import api from "../services/api.ts";
 import Footer from "./footer.tsx";
+import type { usuarioProps } from "./usuario.ts";
+
 
 const Usuario: React.FC = () => {
-    const [usuario, setUsuario] = useState<string>();
-    const [nomeUsuario, setNomeUsuario] = useState<string>();
-    const [usuarioBio, setUsuarioBio] = useState<string>();
-    const [fotoPerfil, setFotoPerfil] = useState<File>();
+    const [idUsuario, setIdUsuario] = useState<number>();
+    const [usuario, setUsuario] = useState<string>("");
+    const [nomeUsuario, setNomeUsuario] = useState<string>("");
+    const [usuarioBio, setUsuarioBio] = useState<string>("");
+    const [fotoPerfil, setFotoPerfil] = useState<File | string>("");
+    const [senha, setSenha] = useState<string>("");
+    const [nomeCompleto, setNomeCompleto] = useState<string>("");
     const [isEditing, setEditing] = useState<boolean>(false);
+    const [isPerfil, setPerfil] = useState<boolean>(true);
+    const navigate = useNavigate();
+    const params = useParams();
 
     const altCampos = () => {
         setEditing(!isEditing);
@@ -18,6 +26,51 @@ const Usuario: React.FC = () => {
     const altCancel = () => {
         setEditing(false);
     }
+
+    const seguirUsuario = () => {
+
+    }
+    const salvarDados = async () => {
+        try {
+            const formData = new FormData();
+            formData.append("avatar", fotoPerfil);
+            formData.append("usuarioBio", usuarioBio);
+            formData.append("nomeUsuario", nomeUsuario);
+            formData.append("usuario", usuario);
+            formData.append("nomeCompleto", nomeCompleto);
+            formData.append("senha", senha);
+            formData.append("idUsuario", idUsuario);
+            console.log(idUsuario);
+            const response = await api.put(`/user/${idUsuario}`, formData);
+            if (response.status === 200) {
+                navigate(`/usuario/${response.data.NOMEUSUARIO}`);
+            }
+        } catch (error) {
+            console.error("Unexpected error!", error);
+        }
+    }
+    const perfilUsuario = async () => {
+        try {
+            const response = await api.get<usuarioProps>(`/user/${params.usuario}`);
+            if (response.status === 200) {
+                console.log(response.data);
+                setNomeUsuario(response.data.NOMEUSUARIO);
+                setUsuarioBio(response.data.DESCRICAOBIO);
+                setFotoPerfil(response.data.FOTOPERFIL);
+                setSenha(response.data.SENHA);
+                setNomeCompleto(response.data.NOMECOMPLETO);
+                setIdUsuario(response.data.ID);
+            } else {
+                console.log("Data recover Failed!", response.status);
+            }
+        } catch (error) {
+            console.error("Unexpected error!", error);
+        }
+    }
+    useEffect(() => {
+        perfilUsuario();
+    }, [])
+
     return (
 
         <Container>
@@ -27,7 +80,7 @@ const Usuario: React.FC = () => {
                     <label htmlFor="foto">Foto Perfil</label>
                     <input type="file"
                         id="foto"
-                        onChange={e => setFotoPerfil(e.target.files?.[0])}>
+                        onChange={e => setFotoPerfil(e.target.files?.[0]!)}>
 
                     </input>
                     <label htmlFor="usuario">Usuario</label>
@@ -49,7 +102,7 @@ const Usuario: React.FC = () => {
                         onChange={e => setUsuarioBio(e.target.value)}
                     />
                     <Botoes>
-                        <button>Salvar</button>
+                        <button onClick={salvarDados}>Salvar</button>
                         <button onClick={altCancel}>Cancelar</button>
                     </Botoes>
 
@@ -59,34 +112,36 @@ const Usuario: React.FC = () => {
                 <div>
                     <Header>
                         <Voltar to={"/"}></Voltar>
-                        <strong>usuario</strong>
+                        <strong>{nomeUsuario}</strong>
                     </Header>
 
                     <Perfil>
-                        <ImgPerfil src="" alt="" />
+                        <ImgPerfil src={fotoPerfil as string} />
                         <Info>
                             <NomeUsuario>
-                                <span>nome do Usuario</span>
+                                <span>{nomeCompleto}</span>
                             </NomeUsuario>
                             <Dados>
                                 <span> postagens</span>
                                 <span> seguidores</span>
                                 <span> seguindo</span>
-                            </Dados>  
+                            </Dados>
+                            <Botoes>
+                                {isPerfil ? (
+                                    <button onClick={altCampos}>editar perfil</button>
+                                ) : (
+                                    <button onClick={seguirUsuario}>Seguir</button>
+                                )}      
+                            </Botoes>
                         </Info>
                     </Perfil>
 
                     <BioUsuario>
-                        <p>Bio</p>
+                        <p>{usuarioBio}</p>
                     </BioUsuario>
 
-                    <Botoes>
-                        <button onClick={altCampos}>editar perfil</button>
-                        <button>mensagens</button>
-                    </Botoes>
-                    
                     <div>
-
+                       <p>Ainda não há nenhum post</p>
                     </div>
                 </div>
             )}
