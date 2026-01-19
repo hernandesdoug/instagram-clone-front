@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Cadastro: React.FC = () => {
-    const [usuario, setUsuario] = useState<string>();
+    const [infoContato, setInfoContato] = useState<string>();
     const [senha, setSenha] = useState<string>();
     const [nomeCompleto, setNomeCompleto] = useState<string>();
     const [nomeUsuario, setNomeUsuario] = useState<string>();
@@ -15,7 +15,7 @@ const Cadastro: React.FC = () => {
     const handleCadastro = async () => {
         
         try {
-            const response = await api.post<cadastroProps>("/user", {usuario, senha, nomeCompleto, nomeUsuario});
+            const response = await api.post<cadastroProps>("/user", {infoContato, senha, nomeCompleto, nomeUsuario});
             if (response.status === 201) {
                 console.log(response.data)         
                 navigate('/usuario');
@@ -35,8 +35,8 @@ const Cadastro: React.FC = () => {
                     <Inputs type="text"
                         id="usuario"
                         placeholder="Número do celular ou email"
-                        value={usuario}
-                        onChange={e => setUsuario(e.target.value)}
+                        value={infoContato}
+                        onChange={e => setInfoContato(e.target.value)}
                         required
                     />
                     <Inputs type="password"

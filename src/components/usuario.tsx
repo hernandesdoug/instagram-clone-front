@@ -8,7 +8,7 @@ import type { usuarioProps } from "./usuario.ts";
 
 const Usuario: React.FC = () => {
     const [idUsuario, setIdUsuario] = useState<number>();
-    const [usuario, setUsuario] = useState<string>("");
+    const [infoContato, setInfoContato] = useState<string>("");
     const [nomeUsuario, setNomeUsuario] = useState<string>("");
     const [usuarioBio, setUsuarioBio] = useState<string>("");
     const [fotoPerfil, setFotoPerfil] = useState<File | string>("");
@@ -28,7 +28,7 @@ const Usuario: React.FC = () => {
     }
 
     const seguirUsuario = () => {
-
+        setPerfil(true);
     }
     const salvarDados = async () => {
         try {
@@ -36,10 +36,10 @@ const Usuario: React.FC = () => {
             formData.append("avatar", fotoPerfil);
             formData.append("usuarioBio", usuarioBio);
             formData.append("nomeUsuario", nomeUsuario);
-            formData.append("usuario", usuario);
+            formData.append("infoContato", infoContato);
             formData.append("nomeCompleto", nomeCompleto);
             formData.append("senha", senha);
-            formData.append("idUsuario", idUsuario);
+            formData.append("idUsuario", idUsuario!.toString());
             console.log(idUsuario);
             const response = await api.put(`/user/${idUsuario}`, formData);
             if (response.status === 200) {
@@ -86,8 +86,8 @@ const Usuario: React.FC = () => {
                     <label htmlFor="usuario">Usuario</label>
                     <input type="text"
                         id="usuario"
-                        value={usuario}
-                        onChange={e => setUsuario(e.target.value)}
+                        value={infoContato}
+                        onChange={e => setInfoContato(e.target.value)}
                     />
                     <label htmlFor="nome-usuario">Nome Usuario</label>
                     <input type="text"

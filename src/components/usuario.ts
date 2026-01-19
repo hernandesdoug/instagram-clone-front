@@ -1,6 +1,6 @@
 export interface usuarioProps {
     ID: number;
-    USUARIO: string;
+    INFOCONTATO: string;
     NOMEUSUARIO: string;
     DESCRICAOBIO: string;
     FOTOPERFIL: string;

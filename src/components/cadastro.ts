@@ -1,5 +1,5 @@
 export interface cadastroProps {
-    usuario: string;
+    infoContato: string;
     senha: string;
     nomeCompleto: string;
     nomeUsuario: string;
