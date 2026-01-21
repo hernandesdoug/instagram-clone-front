@@ -16,6 +16,10 @@ const Usuario: React.FC = () => {
     const [nomeCompleto, setNomeCompleto] = useState<string>("");
     const [isEditing, setEditing] = useState<boolean>(false);
     const [isPerfil, setPerfil] = useState<boolean>(true);
+    const [isPosting, setPosting] = useState<boolean>(false);
+    const [numPostagens, setNumPostagens] = useState<number>(0);
+    const [seguidores, setNumSeguidores] = useState<number>(0);
+    const [seguindo, setNumSeguindo] = useState<number>(0);
     const navigate = useNavigate();
     const params = useParams();
 
@@ -33,13 +37,13 @@ const Usuario: React.FC = () => {
     const salvarDados = async () => {
         try {
             const formData = new FormData();
-            formData.append("avatar", fotoPerfil);
-            formData.append("usuarioBio", usuarioBio);
-            formData.append("nomeUsuario", nomeUsuario);
+            formData.append("idUsuario", idUsuario!.toString());
             formData.append("infoContato", infoContato);
             formData.append("nomeCompleto", nomeCompleto);
+            formData.append("nomeUsuario", nomeUsuario);
             formData.append("senha", senha);
-            formData.append("idUsuario", idUsuario!.toString());
+            formData.append("usuarioBio", usuarioBio);
+            formData.append("avatar", fotoPerfil);
             console.log(idUsuario);
             const response = await api.put(`/user/${idUsuario}`, formData);
             if (response.status === 200) {
@@ -54,12 +58,16 @@ const Usuario: React.FC = () => {
             const response = await api.get<usuarioProps>(`/user/${params.usuario}`);
             if (response.status === 200) {
                 console.log(response.data);
+                setInfoContato(response.data.INFOCONTATO);
                 setNomeUsuario(response.data.NOMEUSUARIO);
                 setUsuarioBio(response.data.DESCRICAOBIO);
                 setFotoPerfil(response.data.FOTOPERFIL);
                 setSenha(response.data.SENHA);
                 setNomeCompleto(response.data.NOMECOMPLETO);
                 setIdUsuario(response.data.ID);
+                setNumSeguidores(response.data.seguidores);
+                setNumSeguindo(response.data.seguindo);
+
             } else {
                 console.log("Data recover Failed!", response.status);
             }
@@ -67,6 +75,7 @@ const Usuario: React.FC = () => {
             console.error("Unexpected error!", error);
         }
     }
+
     useEffect(() => {
         perfilUsuario();
     }, [])
@@ -77,30 +86,39 @@ const Usuario: React.FC = () => {
             {isEditing ? (
                 <Editar>
                     <ImgPerfil src="" alt="" />
-                    <label htmlFor="foto">Foto Perfil</label>
-                    <input type="file"
-                        id="foto"
-                        onChange={e => setFotoPerfil(e.target.files?.[0]!)}>
+                    <Campo>
+                        <label htmlFor="foto">Foto Perfil</label>
+                        <input
+                            type="file"
+                            id="foto"
+                            onChange={e => setFotoPerfil(e.target.files?.[0]!)}
+                        />
+                    </Campo>
+                    <Campo>
+                        <label htmlFor="usuario">Email ou telefone</label>
+                        <input type="text"
+                            id="usuario"
+                            value={infoContato}
+                            onChange={e => setInfoContato(e.target.value)}
+                        />
+                    </Campo>
+                    <Campo>
+                        <label htmlFor="nome-usuario">Nome Usuario</label>
+                        <input type="text"
+                            id="nome-usuario"
+                            value={nomeUsuario}
+                            onChange={e => setNomeUsuario(e.target.value)}
+                        />
+                    </Campo>
+                    <Campo>
+                        <label htmlFor="usuarioBio">Bio</label>
+                        <input type="text"
+                            id="usuarioBio"
+                            value={usuarioBio}
+                            onChange={e => setUsuarioBio(e.target.value)}
+                        />
+                    </Campo>
 
-                    </input>
-                    <label htmlFor="usuario">Usuario</label>
-                    <input type="text"
-                        id="usuario"
-                        value={infoContato}
-                        onChange={e => setInfoContato(e.target.value)}
-                    />
-                    <label htmlFor="nome-usuario">Nome Usuario</label>
-                    <input type="text"
-                        id="nome-usuario"
-                        value={nomeUsuario}
-                        onChange={e => setNomeUsuario(e.target.value)}
-                    />
-                    <label htmlFor="usuarioBio">Bio</label>
-                    <input type="text"
-                        id="usuarioBio"
-                        value={usuarioBio}
-                        onChange={e => setUsuarioBio(e.target.value)}
-                    />
                     <Botoes>
                         <button onClick={salvarDados}>Salvar</button>
                         <button onClick={altCancel}>Cancelar</button>
@@ -109,9 +127,9 @@ const Usuario: React.FC = () => {
                 </Editar>
 
             ) : (
-                <div>
+                <ConteudoPerfil>
                     <Header>
-                        <Voltar to={"/"}></Voltar>
+                        <Voltar to={"/feed"}></Voltar>
                         <strong>{nomeUsuario}</strong>
                     </Header>
 
@@ -122,16 +140,16 @@ const Usuario: React.FC = () => {
                                 <span>{nomeCompleto}</span>
                             </NomeUsuario>
                             <Dados>
-                                <span> postagens</span>
-                                <span> seguidores</span>
-                                <span> seguindo</span>
+                                <span>{numPostagens} postagens</span>
+                                <span>{seguidores} seguidores</span>
+                                <span>{seguindo} seguindo</span>
                             </Dados>
                             <Botoes>
                                 {isPerfil ? (
                                     <button onClick={altCampos}>editar perfil</button>
                                 ) : (
                                     <button onClick={seguirUsuario}>Seguir</button>
-                                )}      
+                                )}
                             </Botoes>
                         </Info>
                     </Perfil>
@@ -140,13 +158,22 @@ const Usuario: React.FC = () => {
                         <p>{usuarioBio}</p>
                     </BioUsuario>
 
-                    <div>
-                       <p>Ainda não há nenhum post</p>
-                    </div>
-                </div>
-            )}
+                    <AreaPostagens>
+                        {isPosting ? (
+                            <div></div>
+                        ) : (
+                            <SemPostagens>
+                                <p>Ainda não há nenhum post</p>
+                                <button>Criar</button>
+                            </SemPostagens>
+                        )}
+
+                    </AreaPostagens>
+                </ConteudoPerfil>
+            )
+            }
             <Footer></Footer>
-        </Container>
+        </Container >
     )
 }
 export default Usuario;
@@ -162,6 +189,7 @@ const Header = styled.div`
     align-items: center;
     gap: 12px;
     margin-bottom: 24px;
+    padding: 20px;
 `;
 
 const Voltar = styled(Link)`
@@ -177,14 +205,15 @@ const Voltar = styled(Link)`
 const Perfil = styled.div`
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
+    gap: 24px;
+    padding: 0 10px;
 `;
 
 const Info = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
+    flex: 1;
 `;
 
 const ImgPerfil = styled.img`
@@ -208,16 +237,18 @@ const NomeUsuario = styled.div`
 
 const Dados = styled.div`
     display: flex;
-    gap: 20px;
-    font-size: 14px;
+    gap: 18px;
+    font-size: 13px;
     span {
         font-weight: 500;
+        white-space: nowrap;
     }
 `;
 
 const BioUsuario = styled.div`
     font-size: 14px;
-    margin-top: 16px;
+    line-height: 1.4;
+    padding: 0 10px;
 `;
 
 const Botoes = styled.div`
@@ -237,7 +268,8 @@ const Botoes = styled.div`
 const Editar = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    padding: 20px;
+    gap: 8px;
 
     label {
         font-size: 14px;
@@ -250,3 +282,37 @@ const Editar = styled.div`
     }
 `;
 
+const Campo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+`;
+
+const ConteudoPerfil = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+`;
+
+const AreaPostagens = styled.div`
+  margin-top: 24px;
+  border-top: 1px solid #eee;
+  padding-top: 24px;
+`;
+
+const SemPostagens = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #777;
+
+  button {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+  }
+`;

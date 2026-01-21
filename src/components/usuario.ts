@@ -6,4 +6,6 @@ export interface usuarioProps {
     FOTOPERFIL: string;
     NOMECOMPLETO: string;
     SENHA: string;
+    seguidores: number;
+    seguindo: number;
 }

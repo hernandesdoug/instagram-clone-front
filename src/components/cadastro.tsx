@@ -17,8 +17,8 @@ const Cadastro: React.FC = () => {
         try {
             const response = await api.post<cadastroProps>("/user", {infoContato, senha, nomeCompleto, nomeUsuario});
             if (response.status === 201) {
-                console.log(response.data)         
-                navigate('/usuario');
+                console.log(response.data)       
+                navigate(`/usuario/${response.data.nomeUsuario}`);
             } else {
                 console.log("Sign Up Failed!", response.status);
             }
