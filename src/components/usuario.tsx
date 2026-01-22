@@ -10,7 +10,7 @@ const Usuario: React.FC = () => {
     const [idUsuario, setIdUsuario] = useState<number>();
     const [infoContato, setInfoContato] = useState<string>("");
     const [nomeUsuario, setNomeUsuario] = useState<string>("");
-    const [usuarioBio, setUsuarioBio] = useState<string>("");
+    const [descricaoBio, setDescricaoBio] = useState<string>("");
     const [fotoPerfil, setFotoPerfil] = useState<File | string>("");
     const [senha, setSenha] = useState<string>("");
     const [nomeCompleto, setNomeCompleto] = useState<string>("");
@@ -42,12 +42,12 @@ const Usuario: React.FC = () => {
             formData.append("nomeCompleto", nomeCompleto);
             formData.append("nomeUsuario", nomeUsuario);
             formData.append("senha", senha);
-            formData.append("usuarioBio", usuarioBio);
+            formData.append("descricaoBio", descricaoBio);
             formData.append("avatar", fotoPerfil);
             console.log(idUsuario);
             const response = await api.put(`/user/${idUsuario}`, formData);
             if (response.status === 200) {
-                navigate(`/usuario/${response.data.NOMEUSUARIO}`);
+                setEditing(false);
             }
         } catch (error) {
             console.error("Unexpected error!", error);
@@ -60,8 +60,8 @@ const Usuario: React.FC = () => {
                 console.log(response.data);
                 setInfoContato(response.data.INFOCONTATO);
                 setNomeUsuario(response.data.NOMEUSUARIO);
-                setUsuarioBio(response.data.DESCRICAOBIO);
-                setFotoPerfil(response.data.FOTOPERFIL);
+                setDescricaoBio(response.data.DESCRICAOBIO);
+                setFotoPerfil(response.data.imgPerfil);
                 setSenha(response.data.SENHA);
                 setNomeCompleto(response.data.NOMECOMPLETO);
                 setIdUsuario(response.data.ID);
@@ -85,13 +85,19 @@ const Usuario: React.FC = () => {
         <Container>
             {isEditing ? (
                 <Editar>
-                    <ImgPerfil src="" alt="" />
+                    <ImgPerfil src={fotoPerfil as string} alt="Foto de perfil" />
                     <Campo>
                         <label htmlFor="foto">Foto Perfil</label>
                         <input
                             type="file"
                             id="foto"
-                            onChange={e => setFotoPerfil(e.target.files?.[0]!)}
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    const imageUrl = URL.createObjectURL(file);
+                                    setFotoPerfil(imageUrl);
+                                }
+                            }}       
                         />
                     </Campo>
                     <Campo>
@@ -114,8 +120,8 @@ const Usuario: React.FC = () => {
                         <label htmlFor="usuarioBio">Bio</label>
                         <input type="text"
                             id="usuarioBio"
-                            value={usuarioBio}
-                            onChange={e => setUsuarioBio(e.target.value)}
+                            value={descricaoBio}
+                            onChange={e => setDescricaoBio(e.target.value)}
                         />
                     </Campo>
 
@@ -134,7 +140,7 @@ const Usuario: React.FC = () => {
                     </Header>
 
                     <Perfil>
-                        <ImgPerfil src={fotoPerfil as string} />
+                        <ImgPerfil src={fotoPerfil as string} alt="Foto de perfil" />
                         <Info>
                             <NomeUsuario>
                                 <span>{nomeCompleto}</span>
@@ -155,7 +161,7 @@ const Usuario: React.FC = () => {
                     </Perfil>
 
                     <BioUsuario>
-                        <p>{usuarioBio}</p>
+                        <p>{descricaoBio}</p>
                     </BioUsuario>
 
                     <AreaPostagens>
@@ -221,7 +227,7 @@ const ImgPerfil = styled.img`
   height: 80px;
   border-radius: 50%;
   border: 1px solid #ccc ;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 const NomeUsuario = styled.div`
