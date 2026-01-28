@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../services/api.ts";
 import Footer from "./footer.tsx";
 import type { usuarioProps } from "./usuario.ts";
@@ -11,7 +11,8 @@ const Usuario: React.FC = () => {
     const [infoContato, setInfoContato] = useState<string>("");
     const [nomeUsuario, setNomeUsuario] = useState<string>("");
     const [descricaoBio, setDescricaoBio] = useState<string>("");
-    const [fotoPerfil, setFotoPerfil] = useState<File | string>("");
+    const [fotoPerfil, setFotoPerfil] = useState<File | null>(null);
+    const [fotoPreview, setFotoPreview] = useState<string>("");
     const [senha, setSenha] = useState<string>("");
     const [nomeCompleto, setNomeCompleto] = useState<string>("");
     const [isEditing, setEditing] = useState<boolean>(false);
@@ -20,7 +21,6 @@ const Usuario: React.FC = () => {
     const [numPostagens, setNumPostagens] = useState<number>(0);
     const [seguidores, setNumSeguidores] = useState<number>(0);
     const [seguindo, setNumSeguindo] = useState<number>(0);
-    const navigate = useNavigate();
     const params = useParams();
 
     const altCampos = () => {
@@ -43,7 +43,10 @@ const Usuario: React.FC = () => {
             formData.append("nomeUsuario", nomeUsuario);
             formData.append("senha", senha);
             formData.append("descricaoBio", descricaoBio);
-            formData.append("avatar", fotoPerfil);
+            if (fotoPerfil) {
+                formData.append("avatar", fotoPerfil);
+            }
+            
             console.log(idUsuario);
             const response = await api.put(`/user/${idUsuario}`, formData);
             if (response.status === 200) {
@@ -61,7 +64,7 @@ const Usuario: React.FC = () => {
                 setInfoContato(response.data.INFOCONTATO);
                 setNomeUsuario(response.data.NOMEUSUARIO);
                 setDescricaoBio(response.data.DESCRICAOBIO);
-                setFotoPerfil(response.data.imgPerfil);
+                setFotoPreview(response.data.imgPerfil);
                 setSenha(response.data.SENHA);
                 setNomeCompleto(response.data.NOMECOMPLETO);
                 setIdUsuario(response.data.ID);
@@ -85,17 +88,18 @@ const Usuario: React.FC = () => {
         <Container>
             {isEditing ? (
                 <Editar>
-                    <ImgPerfil src={fotoPerfil as string} alt="Foto de perfil" />
+                    <ImgPerfil src={fotoPreview || (fotoPerfil as string)} alt="Foto de perfil" />
                     <Campo>
                         <label htmlFor="foto">Foto Perfil</label>
                         <input
                             type="file"
                             id="foto"
+                            accept="image/*"
                             onChange={(e) => {
                                 const file = e.target.files?.[0];
                                 if (file) {
-                                    const imageUrl = URL.createObjectURL(file);
-                                    setFotoPerfil(imageUrl);
+                                    setFotoPerfil(file); 
+                                    setFotoPreview(URL.createObjectURL(file));
                                 }
                             }}       
                         />
@@ -140,7 +144,7 @@ const Usuario: React.FC = () => {
                     </Header>
 
                     <Perfil>
-                        <ImgPerfil src={fotoPerfil as string} alt="Foto de perfil" />
+                        <ImgPerfil src={fotoPreview || (fotoPerfil as string)} alt="Foto de perfil" />
                         <Info>
                             <NomeUsuario>
                                 <span>{nomeCompleto}</span>

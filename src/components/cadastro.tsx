@@ -1,7 +1,6 @@
 import type { cadastroProps } from "./cadastro.ts";
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import Footer from "./footer.tsx";
 import api from "../services/api.ts";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -66,7 +65,7 @@ const Cadastro: React.FC = () => {
                         <Link to={"/"}>Conecte-se</Link>
                     </div>
                 </CadastroForm>
-                <Footer></Footer>
+            
             </div>
         </>
     )

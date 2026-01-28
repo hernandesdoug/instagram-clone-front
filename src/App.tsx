@@ -3,6 +3,7 @@ import Login from "../src/components/login.tsx";
 import Cadastro from "../src/components/cadastro.tsx";
 import Usuario from "./components/usuario.tsx";
 import Feed from "./components/feed.tsx";
+import Pesquisa from "./components/pesquisa.tsx";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Route path="/cadastro" element={<Cadastro />}/>
       <Route path="/usuario/:usuario" element={<Usuario />}/>
       <Route path="/feed" element={<Feed />}/>
+      <Route path="/pesquisa" element={<Pesquisa />}/>
      </Routes>
      </BrowserRouter>
     </>

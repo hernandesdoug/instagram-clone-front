@@ -1,7 +1,6 @@
 import type { loginProps } from "./login.ts";
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Footer from "./footer.tsx";
 import api from "../services/api.ts";
 import landing from "../assets/landing-3x.png"
 import styled from "styled-components";
@@ -13,9 +12,10 @@ const Login: React.FC = () => {
     const handleLogin = async () => {
         try {
             const response = await api.post<loginProps>("/user/login", { usuario, senha });
-
-            if (response.status === 201) {
+           
+            if (response.status === 201 ){
                 console.log(response.data);
+               
                 navigate(`/usuario/${response.data.NOMEUSUARIO}`);
             } else {
                 console.log("User data Failed!", response.status);
@@ -51,7 +51,6 @@ const Login: React.FC = () => {
                     <p>Não tem uma conta? <Link to={"/cadastro"}> Cadastre-se</Link></p>
                 </LoginPage>
             </Container>
-            <Footer></Footer>
         </>
     )
 }
