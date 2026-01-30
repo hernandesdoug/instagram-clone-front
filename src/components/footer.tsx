@@ -1,8 +1,16 @@
 import styled from 'styled-components';
 import { FaHome, FaSearch, FaUser } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+
 
 function Footer() {
+    const [nomeUsuario, setNomeUsuario] = useState("");
+
+    useEffect(() => {
+        const usuario = localStorage.getItem("usuario-nome");
+        setNomeUsuario(usuario ?? "");
+    }, [])
     return (
         <>
             <FooterPage>
@@ -11,16 +19,16 @@ function Footer() {
                         <FaHome />
                     </Link>
                     <Link to={'/pesquisa'}>
-                    <FaSearch/> 
+                        <FaSearch />
                     </Link>
-                    <Link to={'/usuario/:usuario'}>
+                    <Link to={`/usuario/${nomeUsuario}`}>
                         <FaUser />
-                     </Link>
+                    </Link>
                 </FooterIcon>
                 <div>
                     © 2025 Instagram Clone project by <a href="https://github.com/hernandesdoug">Douglas Hernandes</a>
                 </div>
-                
+
             </FooterPage>
         </>
     )

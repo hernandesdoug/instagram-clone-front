@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../services/api.ts";
 import Footer from "./footer.tsx";
 import type { usuarioProps } from "./usuario.ts";
 
-
-const Usuario: React.FC = () => {
+const Usuario =  () => {
     const [idUsuario, setIdUsuario] = useState<number>();
     const [infoContato, setInfoContato] = useState<string>("");
     const [nomeUsuario, setNomeUsuario] = useState<string>("");
@@ -22,6 +21,7 @@ const Usuario: React.FC = () => {
     const [seguidores, setNumSeguidores] = useState<number>(0);
     const [seguindo, setNumSeguindo] = useState<number>(0);
     const params = useParams();
+    
 
     const altCampos = () => {
         setEditing(!isEditing);
@@ -47,7 +47,6 @@ const Usuario: React.FC = () => {
                 formData.append("avatar", fotoPerfil);
             }
             
-            console.log(idUsuario);
             const response = await api.put(`/user/${idUsuario}`, formData);
             if (response.status === 200) {
                 setEditing(false);
@@ -57,7 +56,7 @@ const Usuario: React.FC = () => {
         }
     }
     const perfilUsuario = async () => {
-        try {
+        try {          
             const response = await api.get<usuarioProps>(`/user/${params.usuario}`);
             if (response.status === 200) {
                 console.log(response.data);
@@ -88,7 +87,7 @@ const Usuario: React.FC = () => {
         <Container>
             {isEditing ? (
                 <Editar>
-                    <ImgPerfil src={fotoPreview || (fotoPerfil as string)} alt="Foto de perfil" />
+                    <ImgPerfil src={fotoPreview} alt="Foto de perfil" />
                     <Campo>
                         <label htmlFor="foto">Foto Perfil</label>
                         <input
@@ -144,7 +143,7 @@ const Usuario: React.FC = () => {
                     </Header>
 
                     <Perfil>
-                        <ImgPerfil src={fotoPreview || (fotoPerfil as string)} alt="Foto de perfil" />
+                        <ImgPerfil src={fotoPreview} alt="Foto de perfil" />
                         <Info>
                             <NomeUsuario>
                                 <span>{nomeCompleto}</span>

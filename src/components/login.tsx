@@ -12,11 +12,14 @@ const Login: React.FC = () => {
     const handleLogin = async () => {
         try {
             const response = await api.post<loginProps>("/user/login", { usuario, senha });
-           
-            if (response.status === 201 ){
+            const token = response.data.token;
+            const idUser = response.data.user.id;
+            if (response.status === 201 && token){
                 console.log(response.data);
-               
-                navigate(`/usuario/${response.data.NOMEUSUARIO}`);
+                localStorage.setItem("usuario-token", token);
+                localStorage.setItem("usuario-id", String(idUser));
+                localStorage.setItem("usuario-nome", response.data.user.nome);
+                navigate(`/usuario/${response.data.user.nome}`);   
             } else {
                 console.log("User data Failed!", response.status);
             }
