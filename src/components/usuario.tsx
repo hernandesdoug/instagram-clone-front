@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import api from "../services/api.ts";
 import Footer from "./footer.tsx";
 import type { usuarioProps } from "./usuario.ts";
+import { FaSignOutAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Usuario =  () => {
     const [idUsuario, setIdUsuario] = useState<number>();
@@ -21,7 +23,7 @@ const Usuario =  () => {
     const [seguidores, setNumSeguidores] = useState<number>(0);
     const [seguindo, setNumSeguindo] = useState<number>(0);
     const params = useParams();
-    
+    const navigate = useNavigate();
 
     const altCampos = () => {
         setEditing(!isEditing);
@@ -33,6 +35,11 @@ const Usuario =  () => {
 
     const seguirUsuario = () => {
         setPerfil(true);
+    }
+
+    const logoutPerfil = () => {
+        localStorage.clear();
+        navigate("/");
     }
     const salvarDados = async () => {
         try {
@@ -140,6 +147,7 @@ const Usuario =  () => {
                     <Header>
                         <Voltar to={"/feed"}></Voltar>
                         <strong>{nomeUsuario}</strong>
+                        <BtnLogout onClick={logoutPerfil}><FaSignOutAlt /></BtnLogout>
                     </Header>
 
                     <Perfil>
@@ -210,6 +218,14 @@ const Voltar = styled(Link)`
   display: inline-block;
   cursor: pointer;
 `;
+
+const BtnLogout = styled.button`
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    margin-left: 20px;
+`;   
 
 const Perfil = styled.div`
     display: flex;
