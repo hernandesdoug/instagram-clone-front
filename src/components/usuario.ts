@@ -3,7 +3,7 @@ export interface usuarioProps {
     INFOCONTATO: string;
     NOMEUSUARIO: string;
     DESCRICAOBIO: string;
-    imgPerfil: string;
+    FOTOPERFIL: string;
     NOMECOMPLETO: string;
     SENHA: string;
     seguidores: number;

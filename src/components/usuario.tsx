@@ -71,12 +71,13 @@ const Usuario =  () => {
                 setInfoContato(response.data.INFOCONTATO);
                 setNomeUsuario(response.data.NOMEUSUARIO);
                 setDescricaoBio(response.data.DESCRICAOBIO);
-                setFotoPreview(response.data.imgPerfil);
+                setFotoPreview(response.data.FOTOPERFIL);
                 setSenha(response.data.SENHA);
                 setNomeCompleto(response.data.NOMECOMPLETO);
                 setIdUsuario(response.data.ID);
                 setNumSeguidores(response.data.seguidores);
                 setNumSeguindo(response.data.seguindo);
+                
 
             } else {
                 console.log("Data recover Failed!", response.status);
@@ -88,14 +89,14 @@ const Usuario =  () => {
 
     useEffect(() => {
         perfilUsuario();
-    }, [])
+    }, [params.usuario])
 
     return (
 
         <Container>
             {isEditing ? (
                 <Editar>
-                    <ImgPerfil src={fotoPreview} alt="Foto de perfil" />
+                    <ImgPerfil src={`http://localhost:3333/uploads/${fotoPreview}`} alt="Foto de perfil" />
                     <Campo>
                         <label htmlFor="foto">Foto Perfil</label>
                         <input
@@ -152,7 +153,7 @@ const Usuario =  () => {
                     </Header>
 
                     <Perfil>
-                        <ImgPerfil src={fotoPreview} alt="Foto de perfil" />
+                        <ImgPerfil src={`http://localhost:3333/uploads/${fotoPreview}`} alt="Foto de perfil" />
                         <Info>
                             <NomeUsuario>
                                 <span>{nomeCompleto}</span>

@@ -3,21 +3,23 @@ import { useState } from "react";
 import Footer from "./footer.tsx";
 import { FaSearch } from 'react-icons/fa';
 import api from "../services/api.ts";
-import type { Dados, pesquisaProps } from "./pesquisa.ts";
+import type { Dados } from "./pesquisa.ts";
+import { useNavigate } from "react-router-dom";
 
 function Pesquisa() {
     const [usuarios, setUsuarios] = useState<Dados[]>([]);
     const [buscaUsuario, setBuscaUsuario] = useState("");
     const [modoBusca, setModoBusca] = useState(false);
+    const navigate = useNavigate();
 
     const fetchUsuario = async () => {
         if (!buscaUsuario.trim()) return;
         try {
-            const response = await api.get<pesquisaProps>(`user/search/?query=${buscaUsuario}`);
+            const response = await api.get<Dados[]>(`user/search/${buscaUsuario}`);
 
             if (response.status === 200) {
                 setModoBusca(true);
-                setUsuarios(response.data.results);
+                setUsuarios(response.data);
             } else {
                 console.log("Fail loading data", response.status);
             }
@@ -44,17 +46,17 @@ function Pesquisa() {
                         {usuarios.length === 0 ? (
                             <p>Usuário não encontrado</p>
                         ) : (
-                            <>
-                             <div>
-                               {usuarios.map(dado => (
-                                <div key={dado.id}>
-                                    <img src={dado.imgPerfil} alt={dado.nomeUsuario} />
-                                    <p>{dado.nomeUsuario}</p>
-                                    <span>{dado.nomeCompleto}</span>
-                                </div>             
+
+                            <div>
+                                {usuarios.map(dado => (
+                                    <div key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>
+                                        <ImgPerfil src={dado.FOTOPERFIL} alt={dado.NOMECOMPLETO} />
+                                        <p>{dado.NOMEUSUARIO}</p>
+                                        <span>{dado.NOMECOMPLETO}</span>
+                                    </div>
                                 ))}
-                                </div>
-                            </>
+                            </div>
+
                         )}
                     </>
                 )}
@@ -88,4 +90,12 @@ const Busca = styled.div`
     padding: 0;
     margin-left: 5px;
    }
+`;
+
+const ImgPerfil = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid #ccc ;
+  object-fit: contain;
 `;

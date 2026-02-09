@@ -1,8 +1,8 @@
 export interface Dados {
-    id: number;
-    nomeUsuario: string;
-    nomeCompleto: string;
-    imgPerfil: string;
+    ID: number;
+    NOMEUSUARIO: string;
+    NOMECOMPLETO: string;
+    FOTOPERFIL: string;
 }
 
 export interface pesquisaProps {
