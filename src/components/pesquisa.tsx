@@ -3,21 +3,21 @@ import { useState } from "react";
 import Footer from "./footer.tsx";
 import { FaSearch } from 'react-icons/fa';
 import api from "../services/api.ts";
-import type { usuarioProps } from "./usuario.ts";
+import type { Dados, pesquisaProps } from "./pesquisa.ts";
 
 function Pesquisa() {
-    const [usuarios, setUsuarios] = useState<usuarioProps[]>([]);
+    const [usuarios, setUsuarios] = useState<Dados[]>([]);
     const [buscaUsuario, setBuscaUsuario] = useState("");
     const [modoBusca, setModoBusca] = useState(false);
 
     const fetchUsuario = async () => {
         if (!buscaUsuario.trim()) return;
         try {
-            const response = await api.get<usuarioProps>(`user/?query=${buscaUsuario}`);
+            const response = await api.get<pesquisaProps>(`user/search/?query=${buscaUsuario}`);
 
-            if (response.status === 201) {
+            if (response.status === 200) {
                 setModoBusca(true);
-                //setUsuarios(response.data);
+                setUsuarios(response.data.results);
             } else {
                 console.log("Fail loading data", response.status);
             }
@@ -25,44 +25,43 @@ function Pesquisa() {
             console.error("Unexpected error!", error);
         }
     };
-return (
-    <>
-    <Container>
-            <Busca>
-                <input type="text"
-                    id="buscar-info"
-                    placeholder="Pesquisar "
-                    value={buscaUsuario}
-                    onChange={(e) => setBuscaUsuario(e.target.value)}
-                />
-                <button onClick={fetchUsuario}>
-                    <FaSearch />
-                </button>
-            </Busca>
-            {modoBusca && (
-                <>
-                {usuarios.length === 0 ? (
-                    <p>Usuário não encontrado</p>
-                ) : (
-                  <>
-                <div>
-                  <li>
-                    {usuarios.map(usuario => (
-                        <div>
-                            <img src="" alt="" />
-                            <p></p>
-                        </div>    
-                    ))}
-                  </li>
-                </div>
-                </>
-            )}
-             </>
-            )}
-            <Footer></Footer>
-    </Container>
-    </>
-)
+    return (
+        <>
+            <Container>
+                <Busca>
+                    <input type="text"
+                        id="buscar-info"
+                        placeholder="Pesquisar "
+                        value={buscaUsuario}
+                        onChange={(e) => setBuscaUsuario(e.target.value)}
+                    />
+                    <button onClick={fetchUsuario}>
+                        <FaSearch />
+                    </button>
+                </Busca>
+                {modoBusca && (
+                    <>
+                        {usuarios.length === 0 ? (
+                            <p>Usuário não encontrado</p>
+                        ) : (
+                            <>
+                             <div>
+                               {usuarios.map(dado => (
+                                <div key={dado.id}>
+                                    <img src={dado.imgPerfil} alt={dado.nomeUsuario} />
+                                    <p>{dado.nomeUsuario}</p>
+                                    <span>{dado.nomeCompleto}</span>
+                                </div>             
+                                ))}
+                                </div>
+                            </>
+                        )}
+                    </>
+                )}
+                <Footer></Footer>
+            </Container>
+        </>
+    )
 }
 export default Pesquisa;
 

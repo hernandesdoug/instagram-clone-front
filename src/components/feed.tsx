@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import { useState } from "react";
 import Footer from "./footer.tsx";
 import api from "../services/api.ts";
 import { Link, useNavigate, useParams } from "react-router-dom";

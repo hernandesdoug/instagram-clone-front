@@ -1,5 +1,5 @@
 import type { loginProps } from "./login.ts";
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from "../services/api.ts";
 import landing from "../assets/landing-3x.png"

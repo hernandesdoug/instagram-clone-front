@@ -1,6 +1,6 @@
 import type { cadastroProps } from "./cadastro.ts";
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import api from "../services/api.ts";
 import styled from "styled-components";
 import { Link } from "react-router-dom";

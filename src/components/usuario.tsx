@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import api from "../services/api.ts";
 import Footer from "./footer.tsx";
 import type { usuarioProps } from "./usuario.ts";
+
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
@@ -177,7 +178,9 @@ const Usuario =  () => {
 
                     <AreaPostagens>
                         {isPosting ? (
-                            <div></div>
+                            <div>
+                            
+                            </div>
                         ) : (
                             <SemPostagens>
                                 <p>Ainda não há nenhum post</p>
