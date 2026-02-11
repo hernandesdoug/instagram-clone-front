@@ -47,15 +47,15 @@ function Pesquisa() {
                             <p>Usuário não encontrado</p>
                         ) : (
 
-                            <div>
+                            <Lista>
                                 {usuarios.map(dado => (
-                                    <div key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>
-                                        <ImgPerfil src={dado.FOTOPERFIL} alt={dado.NOMECOMPLETO} />
-                                        <p>{dado.NOMEUSUARIO}</p>
-                                        <span>{dado.NOMECOMPLETO}</span>
-                                    </div>
+                                    <UsuarioInfo key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>
+                                        <ImgPerfil src={`http://localhost:3333/uploads/${dado.FOTOPERFIL}`} alt={dado.NOMECOMPLETO} />
+                                        <NomeUsuario>{dado.NOMEUSUARIO}</NomeUsuario>
+                                        <NomeCompleto>{dado.NOMECOMPLETO}</NomeCompleto>
+                                    </UsuarioInfo>
                                 ))}
-                            </div>
+                            </Lista>
 
                         )}
                     </>
@@ -93,9 +93,38 @@ const Busca = styled.div`
 `;
 
 const ImgPerfil = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: 1px solid #ccc ;
   object-fit: contain;
+`;
+
+const Lista = styled.div`
+ display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const UsuarioInfo = styled.div`
+    display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f2f2f2; 
+  }
+`;
+
+const NomeUsuario = styled.p`
+  font-weight: 700;
+  margin: 0;
+`;
+
+const NomeCompleto = styled.p`
+  font-size: 14px;
+  color: #8b8b8b;
 `;
