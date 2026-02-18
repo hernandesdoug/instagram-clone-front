@@ -18,14 +18,16 @@ const Usuario =  () => {
     const [senha, setSenha] = useState<string>("");
     const [nomeCompleto, setNomeCompleto] = useState<string>("");
     const [isEditing, setEditing] = useState<boolean>(false);
-    const [isPerfil, setPerfil] = useState<boolean>(true);
+    const [isPerfil, setPerfil] = useState<boolean>(false);
+    const [isSeguindo, setSeguindo] = useState<boolean>(false);
     const [isPosting, setPosting] = useState<boolean>(false);
     const [numPostagens, setNumPostagens] = useState<number>(0);
     const [seguidores, setNumSeguidores] = useState<number>(0);
     const [seguindo, setNumSeguindo] = useState<number>(0);
     const params = useParams();
     const navigate = useNavigate();
-
+    
+   
     const altCampos = () => {
         setEditing(!isEditing);
     }
@@ -34,8 +36,19 @@ const Usuario =  () => {
         setEditing(false);
     }
 
-    const seguirUsuario = () => {
-        setPerfil(true);
+    const seguirPerfil = async () => {
+         
+         const usuarioId = localStorage.getItem("usuario-id")
+         try {  
+            const response = await api.post("/seguir", {idUsuario, usuarioId});
+            if (response.status === 201 || response.status === 200) {
+                setSeguindo(response.data.isSeguindo)
+                console.log(response.data.isSeguindo);
+            }
+
+        } catch (error) {
+            console.error("Unexpected error!", error);
+        }
     }
 
     const logoutPerfil = () => {
@@ -77,8 +90,8 @@ const Usuario =  () => {
                 setIdUsuario(response.data.ID);
                 setNumSeguidores(response.data.seguidores);
                 setNumSeguindo(response.data.seguindo);
-                
-
+                const usuarioNome = localStorage.getItem("usuario-nome");
+                setPerfil(usuarioNome === response.data.NOMEUSUARIO);
             } else {
                 console.log("Data recover Failed!", response.status);
             }
@@ -166,8 +179,10 @@ const Usuario =  () => {
                             <Botoes>
                                 {isPerfil ? (
                                     <button onClick={altCampos}>editar perfil</button>
-                                ) : (
-                                    <button onClick={seguirUsuario}>Seguir</button>
+                                ) : (  
+                                    <button onClick={seguirPerfil}>
+                                        {isSeguindo ? "Seguindo" : "Seguir"}
+                                    </button>
                                 )}
                             </Botoes>
                         </Info>
