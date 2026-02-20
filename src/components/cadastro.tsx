@@ -2,8 +2,8 @@ import type { cadastroProps } from "./cadastro.ts";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import api from "../services/api.ts";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { CadastroForm, Inputs, BtnCadastrar } from "../assets/css/cadastro.tsx";
 
 const Cadastro: React.FC = () => {
     const [infoContato, setInfoContato] = useState<string>();
@@ -73,25 +73,3 @@ const Cadastro: React.FC = () => {
 
 export default Cadastro;
 
-const CadastroForm = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    justify-content: center;
-    margin: 10px;
-`;
-
-const Inputs = styled.input`
-  width: 250px;
-  height: 30px;
-  border-radius: 0.2rem;
-`;
-
-const BtnCadastrar = styled.button`
-  width: 250px;
-  height: 30px;
-  border-radius: 0.4rem;
-  background-color: #00a2ff;
-  color: #ffffff;
-`;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { Container, FeedUsuarios } from "../assets/css/feed.tsx";
 import { useState } from "react";
 import Footer from "./footer.tsx";
 import api from "../services/api.ts";
@@ -46,12 +46,4 @@ function Feed() {
 }
 export default Feed;
 
-const Container = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 16px;
-`;
 
-const FeedUsuarios = styled.div`
-  margin-bottom: 16px;
-`;

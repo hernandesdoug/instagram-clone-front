@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { FooterPage, FooterIcon } from '../assets/css/footer';
 import { FaHome, FaSearch, FaUser } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
@@ -35,17 +35,3 @@ function Footer() {
 }
 export default Footer;
 
-const FooterPage = styled.footer`
-  position: fixed;
-  bottom: 0;
-  margin: 10px 0 0;
-  padding: 10px;
-  text-align: center;
-  width: 600px;
-`;
-
-const FooterIcon = styled.div`
-    justify-content: space-around;
-    display: flex;
-    cursor: pointer;
-`;

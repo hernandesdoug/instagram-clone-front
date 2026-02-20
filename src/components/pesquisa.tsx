@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import { Container, Busca, Lista, UsuarioInfo, 
+         ImgPerfil, NomeUsuario, NomeCompleto } from "../assets/css/pesquisa.tsx";
 import { useState } from "react";
 import Footer from "./footer.tsx";
 import { FaSearch } from 'react-icons/fa';
@@ -67,64 +68,3 @@ function Pesquisa() {
 }
 export default Pesquisa;
 
-const Container = styled.div`
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 16px;
- `;
-
-const Busca = styled.div`
-    margin-bottom: 16px;
-    display: flex;
-    input {
-        width: 100%;
-        padding: 10px 14px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        font-size: 14px;
-   }
-   button {
-    cursor: pointer;
-    border: none;
-    background: none;
-    padding: 0;
-    margin-left: 5px;
-   }
-`;
-
-const ImgPerfil = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 1px solid #ccc ;
-  object-fit: contain;
-`;
-
-const Lista = styled.div`
- display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const UsuarioInfo = styled.div`
-    display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
-
-  &:hover {
-    background: #f2f2f2; 
-  }
-`;
-
-const NomeUsuario = styled.p`
-  font-weight: 700;
-  margin: 0;
-`;
-
-const NomeCompleto = styled.p`
-  font-size: 14px;
-  color: #8b8b8b;
-`;

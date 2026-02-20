@@ -3,7 +3,7 @@ import  { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from "../services/api.ts";
 import landing from "../assets/landing-3x.png"
-import styled from "styled-components";
+import { Container, LoginPage, Inputs, LandingImg, BtnEntrar } from "../assets/css/login.tsx";
 
 const Login: React.FC = () => {
     const [usuario, setUsuario] = useState<string>();
@@ -60,35 +60,4 @@ const Login: React.FC = () => {
 
 export default Login;
 
-const Container = styled.div`
-    display: flex;
-`;
-
-const LandingImg = styled.div`
-   width: 50%;
-   object-fit: cover;
-`;
-const LoginPage = styled.div`
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    justify-content: center;
-    margin: 10px;
-`;
-
-const Inputs = styled.input`
-  width: 250px;
-  height: 30px;
-  border-radius: 0.2rem;
-`;
-
-const BtnEntrar = styled.button`
-  width: 250px;
-  height: 30px;
-  border-radius: 0.4rem;
-  background-color: #00a2ff;
-  color: #ffffff;
-`;
 
