@@ -1,11 +1,12 @@
 import { Container , Editar, ImgPerfil, Campo, Botoes, ConteudoPerfil,
          Voltar, BtnLogout, Perfil, Header, Info, Dados, BioUsuario,
-         NomeUsuario, AreaPostagens, SemPostagens } from "../assets/css/usuario.tsx";
+         NomeUsuario} from "../assets/css/usuario.tsx";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api.ts";
 import Footer from "./footer.tsx";
 import type { usuarioProps } from "./usuario.ts";
+import CriarPost from "./criarPost.tsx"
 
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +23,6 @@ const Usuario =  () => {
     const [isEditing, setEditing] = useState<boolean>(false);
     const [isPerfil, setPerfil] = useState<boolean>(false);
     const [isSeguindo, setSeguindo] = useState<boolean>(false);
-    const [isPosting, setPosting] = useState<boolean>(false);
     const [numPostagens, setNumPostagens] = useState<number>(0);
     const [seguidores, setNumSeguidores] = useState<number>(0);
     const [seguindo, setNumSeguindo] = useState<number>(0);
@@ -82,7 +82,6 @@ const Usuario =  () => {
         try {          
             const response = await api.get<usuarioProps>(`/user/${params.usuario}`);
             if (response.status === 200) {
-                console.log(response.data);
                 setInfoContato(response.data.INFOCONTATO);
                 setNomeUsuario(response.data.NOMEUSUARIO);
                 setDescricaoBio(response.data.DESCRICAOBIO);
@@ -92,6 +91,7 @@ const Usuario =  () => {
                 setIdUsuario(response.data.ID);
                 setNumSeguidores(response.data.seguidores);
                 setNumSeguindo(response.data.seguindo);
+                setNumPostagens(response.data.postagens);
                 const usuarioNome = localStorage.getItem("usuario-nome");
                 setPerfil(usuarioNome === response.data.NOMEUSUARIO);
             } else {
@@ -193,20 +193,7 @@ const Usuario =  () => {
                     <BioUsuario>
                         <p>{descricaoBio}</p>
                     </BioUsuario>
-
-                    <AreaPostagens>
-                        {isPosting ? (
-                            <div>
-                            
-                            </div>
-                        ) : (
-                            <SemPostagens>
-                                <p>Ainda não há nenhum post</p>
-                                <button>Criar</button>
-                            </SemPostagens>
-                        )}
-
-                    </AreaPostagens>
+                    <CriarPost></CriarPost>
                 </ConteudoPerfil>
             )
             }

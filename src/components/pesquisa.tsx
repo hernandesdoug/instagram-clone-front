@@ -20,6 +20,7 @@ function Pesquisa() {
 
             if (response.status === 200) {
                 setModoBusca(true);
+                console.log(response.data)
                 setUsuarios(response.data);
             } else {
                 console.log("Fail loading data", response.status);

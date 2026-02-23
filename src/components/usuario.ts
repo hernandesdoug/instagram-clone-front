@@ -8,4 +8,5 @@ export interface usuarioProps {
     SENHA: string;
     seguidores: number;
     seguindo: number;
+    postagens: number;
 }

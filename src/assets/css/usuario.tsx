@@ -126,24 +126,3 @@ export const ConteudoPerfil = styled.div`
     gap: 20px;
 `;
 
-export const AreaPostagens = styled.div`
-  margin-top: 24px;
-  border-top: 1px solid #eee;
-  padding-top: 24px;
-`;
-
-export const SemPostagens = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  color: #777;
-
-  button {
-    padding: 8px 18px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-  }
-`;
