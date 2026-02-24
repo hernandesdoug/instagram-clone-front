@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import api from "../services/api.ts";
-import type { Posts } from "./criarPost.ts";
-import { AreaPostagens, SemPostagens, Botoes } from "../assets/css/criarPost.tsx";
+import type { Posts, CriarPostProps } from "./criarPost.ts";
+import { Container, AreaPostagens, SemPostagens, Botoes, FotoPost } from "../assets/css/criarPost.tsx";
 
-const CriarPost = () => {
+
+const CriarPost = ({usuarioId}: CriarPostProps) => {
   const [foto, setFoto] = useState<File | null>(null);
   const [legenda, setLegenda] = useState("");
   const [isPosting, setPosting] = useState<boolean>(false);
@@ -24,13 +25,13 @@ const CriarPost = () => {
       const usuarioId = localStorage.getItem("usuario-id")
 
       const formData = new FormData();
-      formData.append("idUsuario", String(usuarioId));
-      formData.append("legenda", legenda);
+      formData.append("usuarioId", String(usuarioId));
+      formData.append("legendaFoto", legenda);
       if (foto) {
         formData.append("avatar", foto);
       }
 
-      const response = await api.post(`/post`, formData);
+      const response = await api.post("/post", formData);
       if (response.status === 201) {
         setPosting(false);
         setFoto(null);
@@ -42,10 +43,12 @@ const CriarPost = () => {
   };
 
   const buscaPost = async () => {
+  console.log("chamou busca")
     try {
    
-      const response = await api.get<Posts[]>("/post");
+      const response = await api.get<Posts[]>(`/post/${usuarioId}`);
       if (response.status === 200) {
+         console.log(response.data)
           setPosts(response.data);     
       } else {
         console.log("Data recover Failed!", response.status);
@@ -56,12 +59,14 @@ const CriarPost = () => {
   }
 
   useEffect(() => {
-    buscaPost();
-  }, [])
+    if (!isPosting && usuarioId) {
+      buscaPost()
+    }
+  }, [isPosting, usuarioId])
 
   return (
 
-    <div>
+    <Container>
       {isPosting ? (
         <div>
           <input
@@ -94,14 +99,14 @@ const CriarPost = () => {
       ) :  (
         <AreaPostagens>
          {posts.map(post => (
-          <div key={post.FOTO_ID}>
-            <img src={`http://localhost:3333/uploads/${post.FOTO_POSTAGEM}`} alt="post"/>
+          <div key={post.FOTO_ID} >
+            <FotoPost src={`http://localhost:3333/uploads/${post.FOTO_POSTAGEM}`} alt="post"/>
             <p>{post.LEGENDA_FOTO}</p>
           </div>
          ))}
         </AreaPostagens>
       )}
-    </div>
+    </Container>
   );
 };
 

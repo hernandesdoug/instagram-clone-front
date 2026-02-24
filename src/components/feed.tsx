@@ -1,17 +1,20 @@
-import { Container, FeedUsuarios } from "../assets/css/feed.tsx";
+import { Container, FeedUsuarios, Header, ImgPerfil, FotoPost } from "../assets/css/feed.tsx";
 import { useState, useEffect } from "react";
 import Footer from "./footer.tsx";
 import api from "../services/api.ts";
 import type { Posts } from "./criarPost.ts";
 
 function Feed() {
+  const fotoPerfil = localStorage.getItem("usuario-foto");
 
   const [postagens, setPostagens] = useState<Posts[]>([]);
   const postagensUsuarios = async () => {
+      const idUsuario = localStorage.getItem("usuario-id")
+      console.log(idUsuario);
     try {
-      const response = await api.get("/post")
+      const response = await api.get(`/post/segue/${idUsuario}`)
       if (response.status === 200) {
-          setPostagens(response.data.postagens)
+          setPostagens(response.data)
       } else {
         console.log("Fail loading data", response.status);
       }
@@ -26,7 +29,11 @@ function Feed() {
   return (
     <>
       <Container>
+         <Header>
+            <ImgPerfil src={`http://localhost:3333/uploads/${fotoPerfil}`} alt="Foto de perfil"/>
+          </Header>
         <FeedUsuarios>
+         
           <div>
             {!postagens || postagens.length === 0 ? (
               <p>Você não segue nenhum perfil</p>
@@ -34,7 +41,7 @@ function Feed() {
               <div>
                 {postagens.map((post) => (
                   <div key={post.FOTO_ID}>
-                    <img src={`http://localhost:3333/uploads/${post.FOTO_POSTAGEM}`} alt="post" />
+                    <FotoPost src={`http://localhost:3333/uploads/${post.FOTO_POSTAGEM}`} alt="post" />
                     <p>{post.LEGENDA_FOTO}</p>
                   </div>
                 ))}

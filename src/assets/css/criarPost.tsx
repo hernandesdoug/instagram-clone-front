@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+`;
+
 export const AreaPostagens = styled.div`
   margin-top: 24px;
   border-top: 1px solid #eee;
@@ -34,4 +40,11 @@ display: flex;
         cursor: pointer;
         font-weight: 500;
     }
+`;
+
+export const FotoPost = styled.img`
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ccc ;
+  object-fit: contain;
 `;

@@ -6,5 +6,5 @@ export interface Posts {
 }
 
 export interface CriarPostProps {
-     postagens: Posts[];
+     usuarioId: number|undefined;
 }

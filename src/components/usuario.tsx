@@ -93,6 +93,7 @@ const Usuario =  () => {
                 setNumSeguindo(response.data.seguindo);
                 setNumPostagens(response.data.postagens);
                 const usuarioNome = localStorage.getItem("usuario-nome");
+                localStorage.setItem("usuario-foto", response.data.FOTOPERFIL);
                 setPerfil(usuarioNome === response.data.NOMEUSUARIO);
             } else {
                 console.log("Data recover Failed!", response.status);
@@ -193,7 +194,7 @@ const Usuario =  () => {
                     <BioUsuario>
                         <p>{descricaoBio}</p>
                     </BioUsuario>
-                    <CriarPost></CriarPost>
+                    <CriarPost usuarioId={idUsuario}></CriarPost>
                 </ConteudoPerfil>
             )
             }
