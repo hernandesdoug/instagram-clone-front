@@ -4,6 +4,8 @@ import Cadastro from "../src/components/cadastro.tsx";
 import Usuario from "./components/usuario.tsx";
 import Feed from "./components/feed.tsx";
 import Pesquisa from "./components/pesquisa.tsx";
+import Lista from "./components/lista.tsx";
+import { GiRoyalLove } from "react-icons/gi";
 
 function App() {
 
@@ -17,6 +19,8 @@ function App() {
       <Route path="/usuario/:usuario" element={<Usuario />}/>
       <Route path="/feed" element={<Feed />}/>
       <Route path="/pesquisa" element={<Pesquisa />}/>
+      <Route path="/usuario/seguidores" element={<Lista />}/>
+      <Route path="/usuario/seguindo" element={<Lista />}/>
      </Routes>
      </BrowserRouter>
     </>

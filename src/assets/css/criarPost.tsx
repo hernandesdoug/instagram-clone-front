@@ -12,6 +12,13 @@ export const AreaPostagens = styled.div`
   padding-top: 24px;
 `;
 
+export const UsuarioPostagens = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+`;
+
 export const SemPostagens = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,8 +50,13 @@ display: flex;
 `;
 
 export const FotoPost = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   border: 1px solid #ccc ;
   object-fit: contain;
+`;
+
+export const FotoCard = styled.div`
+  padding: 10px;
+  text-align: center;
 `;

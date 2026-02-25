@@ -1,6 +1,6 @@
 import { Container , Editar, ImgPerfil, Campo, Botoes, ConteudoPerfil,
          Voltar, BtnLogout, Perfil, Header, Info, Dados, BioUsuario,
-         NomeUsuario} from "../assets/css/usuario.tsx";
+         NomeUsuario, LinkSeguidores} from "../assets/css/usuario.tsx";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api.ts";
@@ -45,7 +45,6 @@ const Usuario =  () => {
             const response = await api.post("/seguir", {idUsuario, usuarioId});
             if (response.status === 201 || response.status === 200) {
                 setSeguindo(response.data.isSeguindo)
-                console.log(response.data.isSeguindo);
             }
 
         } catch (error) {
@@ -176,8 +175,9 @@ const Usuario =  () => {
                             </NomeUsuario>
                             <Dados>
                                 <span>{numPostagens} postagens</span>
-                                <span>{seguidores} seguidores</span>
-                                <span>{seguindo} seguindo</span>
+                                <LinkSeguidores to={`/usuario/seguidores`}> {seguidores} seguidores</LinkSeguidores>
+                                <LinkSeguidores to={`/usuario/seguindo`}> {seguindo} seguindo</LinkSeguidores>
+        
                             </Dados>
                             <Botoes>
                                 {isPerfil ? (

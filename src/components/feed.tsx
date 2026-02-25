@@ -9,8 +9,7 @@ function Feed() {
 
   const [postagens, setPostagens] = useState<Posts[]>([]);
   const postagensUsuarios = async () => {
-      const idUsuario = localStorage.getItem("usuario-id")
-      console.log(idUsuario);
+    const idUsuario = localStorage.getItem("usuario-id")
     try {
       const response = await api.get(`/post/segue/${idUsuario}`)
       if (response.status === 200) {
@@ -36,7 +35,7 @@ function Feed() {
          
           <div>
             {!postagens || postagens.length === 0 ? (
-              <p>Você não segue nenhum perfil</p>
+              <p>Não há postagens novas</p>
             ) : (
               <div>
                 {postagens.map((post) => (
@@ -49,9 +48,9 @@ function Feed() {
             )}
           </div>
         </FeedUsuarios>
-        <Footer></Footer>
+         <Footer></Footer> 
       </Container>
-
+    
     </>
   )
 }

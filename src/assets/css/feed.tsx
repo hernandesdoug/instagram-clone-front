@@ -27,8 +27,8 @@ export const ImgPerfil = styled.img`
 `;
 
 export const FotoPost = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: auto;
   border: 1px solid #ccc ;
   object-fit: contain;
 `;

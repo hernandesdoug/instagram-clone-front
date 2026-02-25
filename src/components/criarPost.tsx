@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import api from "../services/api.ts";
 import type { Posts, CriarPostProps } from "./criarPost.ts";
-import { Container, AreaPostagens, SemPostagens, Botoes, FotoPost } from "../assets/css/criarPost.tsx";
-
+import { Container, AreaPostagens, UsuarioPostagens, SemPostagens, 
+         Botoes, FotoPost, FotoCard } from "../assets/css/criarPost.tsx";
 
 const CriarPost = ({usuarioId}: CriarPostProps) => {
   const [foto, setFoto] = useState<File | null>(null);
@@ -43,12 +43,10 @@ const CriarPost = ({usuarioId}: CriarPostProps) => {
   };
 
   const buscaPost = async () => {
-  console.log("chamou busca")
     try {
    
       const response = await api.get<Posts[]>(`/post/${usuarioId}`);
       if (response.status === 200) {
-         console.log(response.data)
           setPosts(response.data);     
       } else {
         console.log("Data recover Failed!", response.status);
@@ -97,14 +95,14 @@ const CriarPost = ({usuarioId}: CriarPostProps) => {
           </SemPostagens>
         </AreaPostagens>
       ) :  (
-        <AreaPostagens>
+        <UsuarioPostagens>
          {posts.map(post => (
-          <div key={post.FOTO_ID} >
+          <FotoCard key={post.FOTO_ID} >
             <FotoPost src={`http://localhost:3333/uploads/${post.FOTO_POSTAGEM}`} alt="post"/>
             <p>{post.LEGENDA_FOTO}</p>
-          </div>
+          </FotoCard>
          ))}
-        </AreaPostagens>
+        </UsuarioPostagens>
       )}
     </Container>
   );

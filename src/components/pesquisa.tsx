@@ -62,8 +62,9 @@ function Pesquisa() {
                         )}
                     </>
                 )}
-                <Footer></Footer>
+             <Footer></Footer>   
             </Container>
+           
         </>
     )
 }

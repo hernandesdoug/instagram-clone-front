@@ -126,3 +126,8 @@ export const ConteudoPerfil = styled.div`
     gap: 20px;
 `;
 
+export const LinkSeguidores = styled(Link)`
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+`;
