@@ -7,14 +7,13 @@ import Footer from "./footer.tsx";
 
 const Lista = () => {
     const [usuarios, setUsuarios] = useState<Dados[]>([]);
-    const [seguidores, setSeguidores] = useState<boolean>(false);
-    const [seguindo, setSeguindo] = useState<boolean>(false);
+    const { tipo } = useParams<{ tipo: string}>();
     const navigate = useNavigate();
     const buscaLista = async () => {
         try {
             const usuarioId = localStorage.getItem("usuario-id");
-          
-            const response = await api.get<Dados[]>(`/seguir/seguidores/${usuarioId}`);
+            tipo === "seguidores" ? "seguidores" : "seguindo";
+            const response = await api.get<Dados[]>(`/seguir/${tipo}/${usuarioId}`);
             if (response.status === 200) {
                 setUsuarios(response.data);
             } else {
@@ -26,10 +25,11 @@ const Lista = () => {
     }
     useEffect(() => {
           buscaLista();
-        }, [])
+        }, [tipo])
     return (
         <>
             <Container>
+                <h2>{tipo === "seguidores" ? "Seguidores" : "Seguindo"}</h2>
                 <ListaSeg>
                     {usuarios.map(dado => (
                         <UsuarioInfo key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>

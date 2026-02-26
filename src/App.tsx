@@ -19,8 +19,7 @@ function App() {
       <Route path="/usuario/:usuario" element={<Usuario />}/>
       <Route path="/feed" element={<Feed />}/>
       <Route path="/pesquisa" element={<Pesquisa />}/>
-      <Route path="/usuario/seguidores" element={<Lista />}/>
-      <Route path="/usuario/seguindo" element={<Lista />}/>
+      <Route path="/usuario/lista/:tipo" element={<Lista />}/>
      </Routes>
      </BrowserRouter>
     </>
