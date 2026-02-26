@@ -1,5 +1,5 @@
 import api from "../services/api.ts";
-import { Container, ListaSeg, UsuarioInfo, NomeUsuario, NomeCompleto, ImgPerfil } from "../assets/css/lista.tsx";
+import { Container, ListaSeg, UsuarioInfo, NomeUsuario, NomeCompleto, ImgPerfil, BtnSeg } from "../assets/css/lista.tsx";
 import type { Dados } from "./lista.ts";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -36,7 +36,7 @@ const Lista = () => {
                             <ImgPerfil src={`http://localhost:3333/uploads/${dado.FOTOPERFIL}`} alt={dado.NOMECOMPLETO} />
                             <NomeUsuario>{dado.NOMEUSUARIO}</NomeUsuario>
                             <NomeCompleto>{dado.NOMECOMPLETO}</NomeCompleto>
-                        </UsuarioInfo>
+                        </UsuarioInfo> 
                     ))}
                 </ListaSeg>
                 <Footer></Footer>

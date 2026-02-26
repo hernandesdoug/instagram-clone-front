@@ -1,23 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import api from "../services/api.ts";
-import type { Posts, CriarPostProps } from "./criarPost.ts";
-import { Container, AreaPostagens, UsuarioPostagens, SemPostagens, 
-         Botoes, FotoPost, FotoCard } from "../assets/css/criarPost.tsx";
+import { useNavigate } from "react-router-dom";
+import { Container,  Botoes,  } from "../assets/css/criarPost.tsx";
 
-const CriarPost = ({usuarioId}: CriarPostProps) => {
+const CriarPost = () => {
   const [foto, setFoto] = useState<File | null>(null);
   const [legenda, setLegenda] = useState("");
-  const [isPosting, setPosting] = useState<boolean>(false);
-  const [posts, setPosts] = useState<Posts[]>([]);
-
-
-  const criarPost = () => {
-    setPosting(true);
-  }
+  const navigate = useNavigate();
 
   const cancelaPost = () => {
-    setPosting(false);
     setLegenda("");
+    const usuarioNome = localStorage.getItem("usuario-nome");
+    navigate(`/usuario/${usuarioNome}`);
   }
 
   const salvarPost = async () => {
@@ -33,7 +27,6 @@ const CriarPost = ({usuarioId}: CriarPostProps) => {
 
       const response = await api.post("/post", formData);
       if (response.status === 201) {
-        setPosting(false);
         setFoto(null);
         setLegenda("");
       }
@@ -42,30 +35,9 @@ const CriarPost = ({usuarioId}: CriarPostProps) => {
     }
   };
 
-  const buscaPost = async () => {
-    try {
-   
-      const response = await api.get<Posts[]>(`/post/${usuarioId}`);
-      if (response.status === 200) {
-          setPosts(response.data);     
-      } else {
-        console.log("Data recover Failed!", response.status);
-      }
-    } catch (error) {
-      console.error("Unexpected error!", error);
-    }
-  }
-
-  useEffect(() => {
-    if (!isPosting && usuarioId) {
-      buscaPost()
-    }
-  }, [isPosting, usuarioId])
-
   return (
 
     <Container>
-      {isPosting ? (
         <div>
           <input
             type="file"
@@ -87,23 +59,7 @@ const CriarPost = ({usuarioId}: CriarPostProps) => {
           </Botoes>
 
         </div>
-      ) : posts.length === 0 ? (
-        <AreaPostagens>
-          <SemPostagens>
-            <p>Ainda não há nenhum post</p>
-              <button onClick={criarPost}>Criar</button>         
-          </SemPostagens>
-        </AreaPostagens>
-      ) :  (
-        <UsuarioPostagens>
-         {posts.map(post => (
-          <FotoCard key={post.FOTO_ID} >
-            <FotoPost src={`http://localhost:3333/uploads/${post.FOTO_POSTAGEM}`} alt="post"/>
-            <p>{post.LEGENDA_FOTO}</p>
-          </FotoCard>
-         ))}
-        </UsuarioPostagens>
-      )}
+ 
     </Container>
   );
 };

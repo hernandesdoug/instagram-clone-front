@@ -1,12 +1,12 @@
 import { Container , Editar, ImgPerfil, Campo, Botoes, ConteudoPerfil,
          Voltar, BtnLogout, Perfil, Header, Info, Dados, BioUsuario,
-         NomeUsuario, LinkSeguidores} from "../assets/css/usuario.tsx";
+         NomeUsuario, LinkSeguidores, Criar} from "../assets/css/usuario.tsx";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api.ts";
 import Footer from "./footer.tsx";
 import type { usuarioProps } from "./usuario.ts";
-import CriarPost from "./criarPost.tsx"
+import ListarPosts from "./listarPosts.tsx"
 
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -92,7 +92,6 @@ const Usuario =  () => {
                 setNumSeguindo(response.data.seguindo);
                 setNumPostagens(response.data.postagens);
                 const usuarioNome = localStorage.getItem("usuario-nome");
-                localStorage.setItem("usuario-foto", response.data.FOTOPERFIL);
                 setPerfil(usuarioNome === response.data.NOMEUSUARIO);
             } else {
                 console.log("Data recover Failed!", response.status);
@@ -163,6 +162,7 @@ const Usuario =  () => {
                 <ConteudoPerfil>
                     <Header>
                         <Voltar to={"/feed"}></Voltar>
+                        <Criar to={"/post"}></Criar>
                         <strong>{nomeUsuario}</strong>
                         <BtnLogout onClick={logoutPerfil}><FaSignOutAlt /></BtnLogout>
                     </Header>
@@ -194,7 +194,7 @@ const Usuario =  () => {
                     <BioUsuario>
                         <p>{descricaoBio}</p>
                     </BioUsuario>
-                    <CriarPost usuarioId={idUsuario}></CriarPost>
+                    <ListarPosts usuarioId={idUsuario}></ListarPosts>
                 </ConteudoPerfil>
             )
             }

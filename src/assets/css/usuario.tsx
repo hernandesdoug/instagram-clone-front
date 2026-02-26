@@ -25,6 +25,17 @@ export const Voltar = styled(Link)`
   cursor: pointer;
 `;
 
+export const Criar = styled(Link)`
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  cursor: pointer;
+  background: linear-gradient(#000, #000), linear-gradient(#000, #000);
+  background-size: 100% 2px, 2px 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
 export const BtnLogout = styled.button`
     cursor: pointer;
     border: none;

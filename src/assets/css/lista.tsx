@@ -15,7 +15,7 @@ export const ImgPerfil = styled.img`
 `;
 
 export const ListaSeg = styled.div`
- display: flex;
+  display: flex;
   flex-direction: column;
   gap: 12px;
 `;
@@ -41,4 +41,13 @@ export const NomeUsuario = styled.p`
 export const NomeCompleto = styled.p`
   font-size: 14px;
   color: #8b8b8b;
+`;
+
+export const BtnSeg = styled.button`
+        padding: 8px 14px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+  
 `;

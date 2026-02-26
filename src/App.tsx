@@ -5,7 +5,7 @@ import Usuario from "./components/usuario.tsx";
 import Feed from "./components/feed.tsx";
 import Pesquisa from "./components/pesquisa.tsx";
 import Lista from "./components/lista.tsx";
-import { GiRoyalLove } from "react-icons/gi";
+import CriarPost from "./components/criarPost.tsx";
 
 function App() {
 
@@ -20,6 +20,7 @@ function App() {
       <Route path="/feed" element={<Feed />}/>
       <Route path="/pesquisa" element={<Pesquisa />}/>
       <Route path="/usuario/lista/:tipo" element={<Lista />}/>
+      <Route path="/post" element={<CriarPost />}/>
      </Routes>
      </BrowserRouter>
     </>

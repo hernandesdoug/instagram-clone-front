@@ -19,6 +19,7 @@ const Login: React.FC = () => {
                 localStorage.setItem("usuario-token", token);
                 localStorage.setItem("usuario-id", String(idUser));
                 localStorage.setItem("usuario-nome", response.data.user.nome);
+                localStorage.setItem("usuario-foto", response.data.user.foto);
                 navigate(`/usuario/${response.data.user.nome}`);   
             } else {
                 console.log("User data Failed!", response.status);
