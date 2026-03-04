@@ -1,13 +1,13 @@
 import api from "../services/api.ts";
-import { Container, ListaSeg, UsuarioInfo, NomeUsuario, NomeCompleto, ImgPerfil, BtnSeg } from "../assets/css/lista.tsx";
+import { Container, ListaSeg, UsuarioInfo, NomeUsuario, NomeCompleto, ImgPerfil, Tabs, Tab } from "../assets/css/lista.tsx";
 import type { Dados } from "./lista.ts";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Footer from "./footer.tsx";
 
 const Lista = () => {
     const [usuarios, setUsuarios] = useState<Dados[]>([]);
-    const { tipo } = useParams<{ tipo: string}>();
+    const [tipo, setTipo] = useState<"seguidores" | "seguindo">("seguidores");
     const navigate = useNavigate();
     const buscaLista = async () => {
         try {
@@ -29,7 +29,14 @@ const Lista = () => {
     return (
         <>
             <Container>
-                <h2>{tipo === "seguidores" ? "Seguidores" : "Seguindo"}</h2>
+                <Tabs>
+                <Tab active={tipo === "seguidores"} onClick={() => setTipo("seguidores")}>
+                    Seguidores
+                </Tab>
+                <Tab active={tipo === "seguindo"} onClick={() => setTipo("seguindo")}>
+                    Seguindo
+                </Tab>
+            </Tabs>
                 <ListaSeg>
                     {usuarios.map(dado => (
                         <UsuarioInfo key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>

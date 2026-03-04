@@ -9,4 +9,5 @@ export interface usuarioProps {
     seguidores: number;
     seguindo: number;
     postagens: number;
+    isSeguindo: boolean;
 }

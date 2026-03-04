@@ -26,6 +26,8 @@ const Usuario =  () => {
     const [numPostagens, setNumPostagens] = useState<number>(0);
     const [seguidores, setNumSeguidores] = useState<number>(0);
     const [seguindo, setNumSeguindo] = useState<number>(0);
+    const [isVisitando, setIsVisitando] = useState<boolean>(false);
+    const usuarioLogado = localStorage.getItem("usuario-nome");
     const params = useParams();
     const navigate = useNavigate();
     
@@ -91,8 +93,10 @@ const Usuario =  () => {
                 setNumSeguidores(response.data.seguidores);
                 setNumSeguindo(response.data.seguindo);
                 setNumPostagens(response.data.postagens);
+                setSeguindo(response.data.isSeguindo);
                 const usuarioNome = localStorage.getItem("usuario-nome");
                 setPerfil(usuarioNome === response.data.NOMEUSUARIO);
+                setIsVisitando(usuarioLogado !== response.data.NOMEUSUARIO);
             } else {
                 console.log("Data recover Failed!", response.status);
             }
@@ -161,8 +165,8 @@ const Usuario =  () => {
             ) : (
                 <ConteudoPerfil>
                     <Header>
-                        <Voltar to={"/feed"}></Voltar>
-                        <Criar to={"/post"}></Criar>
+                       {usuarioLogado && isVisitando && <Voltar to={"/feed"}></Voltar>}
+                       {usuarioLogado && !isVisitando && <Criar to={"/post"}></Criar>}
                         <strong>{nomeUsuario}</strong>
                         <BtnLogout onClick={logoutPerfil}><FaSignOutAlt /></BtnLogout>
                     </Header>

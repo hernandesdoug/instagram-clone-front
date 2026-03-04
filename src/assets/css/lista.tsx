@@ -44,10 +44,36 @@ export const NomeCompleto = styled.p`
 `;
 
 export const BtnSeg = styled.button`
-        padding: 8px 14px;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-        font-weight: 500;
-  
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+`;
+
+export const Tabs = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ccc;
+`;
+
+interface TabProps {
+  active?: boolean;
+}
+
+export const Tab = styled.button<TabProps>`
+  padding: 8px 16px;
+  margin: 0 5px;
+  font-size: 14px;
+  background: none;
+  border: none;
+  border-bottom: ${({ active }) => (active ? "2px solid #007bff" : "2px solid transparent")};
+  color: ${({ active }) => (active ? "#007bff" : "#333")};
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #0056b3;
+  }
 `;
