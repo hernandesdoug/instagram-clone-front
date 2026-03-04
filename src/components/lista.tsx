@@ -1,7 +1,7 @@
 import api from "../services/api.ts";
 import { Container, ListaSeg, UsuarioInfo, NomeUsuario, NomeCompleto, ImgPerfil, Tabs, Tab } from "../assets/css/lista.tsx";
 import type { Dados } from "./lista.ts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Footer from "./footer.tsx";
 
@@ -9,11 +9,13 @@ const Lista = () => {
     const [usuarios, setUsuarios] = useState<Dados[]>([]);
     const [tipo, setTipo] = useState<"seguidores" | "seguindo">("seguidores");
     const navigate = useNavigate();
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+
     const buscaLista = async () => {
-        try {
-            const usuarioId = localStorage.getItem("usuario-id");
+        try {     
             tipo === "seguidores" ? "seguidores" : "seguindo";
-            const response = await api.get<Dados[]>(`/seguir/${tipo}/${usuarioId}`);
+            const response = await api.get<Dados[]>(`/seguir/${tipo}/${id}`);
             if (response.status === 200) {
                 setUsuarios(response.data);
             } else {

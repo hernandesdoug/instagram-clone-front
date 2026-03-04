@@ -10,14 +10,15 @@ const ListarPosts = ({usuarioId}: CriarPostProps) => {
   const navigate = useNavigate();
   const buscaPost = async () => {
     try {
-   
       const response = await api.get<Posts[]>(`/post/${usuarioId}`);
+      console.log(response);
       if (response.status === 200) {
           setPosts(response.data);     
       } else {
         console.log("Data recover Failed!", response.status);
       }
     } catch (error) {
+      setPosts([]);
       console.error("Unexpected error!", error);
     }
   }

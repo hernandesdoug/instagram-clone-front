@@ -179,8 +179,8 @@ const Usuario =  () => {
                             </NomeUsuario>
                             <Dados>
                                 <span>{numPostagens} postagens</span>
-                                <LinkSeguidores to={`/usuario/lista/seguidores`}> {seguidores} seguidores</LinkSeguidores>
-                                <LinkSeguidores to={`/usuario/lista/seguindo`}> {seguindo} seguindo</LinkSeguidores>
+                                <LinkSeguidores to={`/usuario/lista/seguidores?id=${idUsuario}`}> {seguidores} seguidores</LinkSeguidores>
+                                <LinkSeguidores to={`/usuario/lista/seguindo?id=${idUsuario}`}> {seguindo} seguindo</LinkSeguidores>
         
                             </Dados>
                             <Botoes>
