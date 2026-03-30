@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../services/api.ts";
 import { useNavigate } from "react-router-dom";
-import { Container,  Botoes,  } from "../assets/css/criarPost.tsx";
+import { Container,  Botoes  } from "../assets/css/criarPost.tsx";
 
 const CriarPost = () => {
   const [foto, setFoto] = useState<File | null>(null);
@@ -33,7 +33,7 @@ const CriarPost = () => {
     } catch (error) {
       console.error("Unexpected error!", error);
     }
-  };
+  }
 
   return (
 
@@ -57,11 +57,9 @@ const CriarPost = () => {
             <button onClick={salvarPost}>Postar</button>
             <button onClick={cancelaPost}>Cancelar</button>
           </Botoes>
-
         </div>
- 
     </Container>
   );
-};
+}
 
 export default CriarPost;

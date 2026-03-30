@@ -1,5 +1,7 @@
-import { Container, Busca, Lista, UsuarioInfo, 
-         ImgPerfil, NomeUsuario, NomeCompleto } from "../assets/css/pesquisa.tsx";
+import {
+    Container, Busca, Lista, UsuarioInfo,
+    ImgPerfil, NomeUsuario, NomeCompleto
+} from "../assets/css/pesquisa.tsx";
 import { useState } from "react";
 import Footer from "./footer.tsx";
 import { FaSearch } from 'react-icons/fa';
@@ -28,44 +30,41 @@ function Pesquisa() {
         } catch (error) {
             console.error("Unexpected error!", error);
         }
-    };
+    }
     return (
-        <>
-            <Container>
-                <Busca>
-                    <input type="text"
-                        id="buscar-info"
-                        placeholder="Pesquisar "
-                        value={buscaUsuario}
-                        onChange={(e) => setBuscaUsuario(e.target.value)}
-                    />
-                    <button onClick={fetchUsuario}>
-                        <FaSearch />
-                    </button>
-                </Busca>
-                {modoBusca && (
-                    <>
-                        {usuarios.length === 0 ? (
-                            <p>Usuário não encontrado</p>
-                        ) : (
 
-                            <Lista>
-                                {usuarios.map(dado => (
-                                    <UsuarioInfo key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>
-                                        <ImgPerfil src={`http://localhost:3333/uploads/${dado.FOTOPERFIL}`} alt={dado.NOMECOMPLETO} />
-                                        <NomeUsuario>{dado.NOMEUSUARIO}</NomeUsuario>
-                                        <NomeCompleto>{dado.NOMECOMPLETO}</NomeCompleto>
-                                    </UsuarioInfo>
-                                ))}
-                            </Lista>
+        <Container>
+            <Busca>
+                <input type="text"
+                    id="buscar-info"
+                    placeholder="Pesquisar "
+                    value={buscaUsuario}
+                    onChange={(e) => setBuscaUsuario(e.target.value)}
+                />
+                <button onClick={fetchUsuario}>
+                    <FaSearch />
+                </button>
+            </Busca>
+            {modoBusca && (
+                <>
+                    {usuarios.length === 0 ? (
+                        <p>Usuário não encontrado</p>
+                    ) : (
 
-                        )}
-                    </>
-                )}
-             <Footer></Footer>   
-            </Container>
-           
-        </>
+                        <Lista>
+                            {usuarios.map(dado => (
+                                <UsuarioInfo key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>
+                                    <ImgPerfil src={`http://localhost:3333/uploads/${dado.FOTOPERFIL}`} alt={dado.NOMECOMPLETO} />
+                                    <NomeUsuario>{dado.NOMEUSUARIO}</NomeUsuario>
+                                    <NomeCompleto>{dado.NOMECOMPLETO}</NomeCompleto>
+                                </UsuarioInfo>
+                            ))}
+                        </Lista>
+                    )}
+                </>
+            )}
+            <Footer></Footer>
+        </Container>
     )
 }
 export default Pesquisa;

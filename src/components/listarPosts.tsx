@@ -51,6 +51,6 @@ const ListarPosts = ({usuarioId}: CriarPostProps) => {
       )}
     </Container>
   );
-};
+}
 
 export default ListarPosts;

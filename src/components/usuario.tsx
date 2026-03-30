@@ -1,17 +1,18 @@
-import { Container , Editar, ImgPerfil, Campo, Botoes, ConteudoPerfil,
-         Voltar, BtnLogout, Perfil, Header, Info, Dados, BioUsuario,
-         NomeUsuario, LinkSeguidores, Criar} from "../assets/css/usuario.tsx";
+import {
+    Container, Editar, ImgPerfil, Campo, Botoes, ConteudoPerfil,
+    Voltar, BtnLogout, Perfil, Header, Info, Dados, BioUsuario,
+    NomeUsuario, LinkSeguidores, Criar
+} from "../assets/css/usuario.tsx";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api.ts";
 import Footer from "./footer.tsx";
 import type { usuarioProps } from "./usuario.ts";
 import ListarPosts from "./listarPosts.tsx"
-
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-const Usuario =  () => {
+const Usuario = () => {
     const [idUsuario, setIdUsuario] = useState<number>();
     const [infoContato, setInfoContato] = useState<string>("");
     const [nomeUsuario, setNomeUsuario] = useState<string>("");
@@ -30,8 +31,7 @@ const Usuario =  () => {
     const usuarioLogado = localStorage.getItem("usuario-nome");
     const params = useParams();
     const navigate = useNavigate();
-    
-   
+
     const altCampos = () => {
         setEditing(!isEditing);
     }
@@ -41,10 +41,10 @@ const Usuario =  () => {
     }
 
     const seguirPerfil = async () => {
-         
-         const usuarioId = localStorage.getItem("usuario-id")
-         try {  
-            const response = await api.post("/seguir", {idUsuario, usuarioId});
+
+        const usuarioId = localStorage.getItem("usuario-id")
+        try {
+            const response = await api.post("/seguir", { idUsuario, usuarioId });
             if (response.status === 201 || response.status === 200) {
                 setSeguindo(response.data.isSeguindo)
             }
@@ -70,7 +70,7 @@ const Usuario =  () => {
             if (fotoPerfil) {
                 formData.append("avatar", fotoPerfil);
             }
-            
+
             const response = await api.put(`/user/${idUsuario}`, formData);
             if (response.status === 200) {
                 setEditing(false);
@@ -80,7 +80,7 @@ const Usuario =  () => {
         }
     }
     const perfilUsuario = async () => {
-        try {          
+        try {
             const response = await api.get<usuarioProps>(`/user/${params.usuario}`);
             if (response.status === 200) {
                 setInfoContato(response.data.INFOCONTATO);
@@ -124,10 +124,10 @@ const Usuario =  () => {
                             onChange={(e) => {
                                 const file = e.target.files?.[0];
                                 if (file) {
-                                    setFotoPerfil(file); 
+                                    setFotoPerfil(file);
                                     setFotoPreview(URL.createObjectURL(file));
                                 }
-                            }}       
+                            }}
                         />
                     </Campo>
                     <Campo>
@@ -154,19 +154,16 @@ const Usuario =  () => {
                             onChange={e => setDescricaoBio(e.target.value)}
                         />
                     </Campo>
-
                     <Botoes>
                         <button onClick={salvarDados}>Salvar</button>
                         <button onClick={altCancel}>Cancelar</button>
                     </Botoes>
-
                 </Editar>
-
             ) : (
                 <ConteudoPerfil>
                     <Header>
-                       {usuarioLogado && isVisitando && <Voltar to={"/feed"}></Voltar>}
-                       {usuarioLogado && !isVisitando && <Criar to={"/post"}></Criar>}
+                        {usuarioLogado && isVisitando && <Voltar to={"/feed"}></Voltar>}
+                        {usuarioLogado && !isVisitando && <Criar to={"/post"}></Criar>}
                         <strong>{nomeUsuario}</strong>
                         <BtnLogout onClick={logoutPerfil}><FaSignOutAlt /></BtnLogout>
                     </Header>
@@ -181,12 +178,11 @@ const Usuario =  () => {
                                 <span>{numPostagens} postagens</span>
                                 <LinkSeguidores to={`/usuario/lista/seguidores?id=${idUsuario}`}> {seguidores} seguidores</LinkSeguidores>
                                 <LinkSeguidores to={`/usuario/lista/seguindo?id=${idUsuario}`}> {seguindo} seguindo</LinkSeguidores>
-        
                             </Dados>
                             <Botoes>
                                 {isPerfil ? (
                                     <button onClick={altCampos}>editar perfil</button>
-                                ) : (  
+                                ) : (
                                     <button onClick={seguirPerfil}>
                                         {isSeguindo ? "Seguindo" : "Seguir"}
                                     </button>
@@ -194,7 +190,6 @@ const Usuario =  () => {
                             </Botoes>
                         </Info>
                     </Perfil>
-
                     <BioUsuario>
                         <p>{descricaoBio}</p>
                     </BioUsuario>

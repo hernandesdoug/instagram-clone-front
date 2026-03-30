@@ -4,6 +4,7 @@ export const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
   padding: 16px;
+  margin-bottom: 70px;
 `;
 
 export const FeedUsuarios = styled.div`
@@ -31,4 +32,5 @@ export const FotoPost = styled.img`
   height: auto;
   border: 1px solid #ccc ;
   object-fit: contain;
+  width: 600px;
 `;

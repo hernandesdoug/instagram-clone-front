@@ -5,11 +5,11 @@ const api = axios.create({
   baseURL: "http://localhost:3333/",
 });
 
-api.interceptors.request.use( config => {
+api.interceptors.request.use(config => {
   const token = localStorage.getItem("usuario-token");
   config.headers["Authorization"] = `Bearer ${token}`;
   return config;
-})
+});
 
 api.interceptors.response.use(
   (response) => response,
@@ -20,9 +20,9 @@ api.interceptors.response.use(
         localStorage.removeItem("usuario-token");
         const navigate = useNavigate();
         navigate('/usuario');
+      }
     }
-  }
-  return Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 

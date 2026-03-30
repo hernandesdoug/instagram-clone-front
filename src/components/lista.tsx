@@ -1,7 +1,7 @@
 import api from "../services/api.ts";
 import { Container, ListaSeg, UsuarioInfo, NomeUsuario, NomeCompleto, ImgPerfil, Tabs, Tab } from "../assets/css/lista.tsx";
 import type { Dados } from "./lista.ts";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Footer from "./footer.tsx";
 
@@ -13,7 +13,7 @@ const Lista = () => {
     const id = urlParams.get("id");
 
     const buscaLista = async () => {
-        try {     
+        try {
             tipo === "seguidores" ? "seguidores" : "seguindo";
             const response = await api.get<Dados[]>(`/seguir/${tipo}/${id}`);
             if (response.status === 200) {
@@ -26,12 +26,12 @@ const Lista = () => {
         }
     }
     useEffect(() => {
-          buscaLista();
-        }, [tipo])
+        buscaLista();
+    }, [tipo])
     return (
-        <>
-            <Container>
-                <Tabs>
+
+        <Container>
+            <Tabs>
                 <Tab active={tipo === "seguidores"} onClick={() => setTipo("seguidores")}>
                     Seguidores
                 </Tab>
@@ -39,19 +39,17 @@ const Lista = () => {
                     Seguindo
                 </Tab>
             </Tabs>
-                <ListaSeg>
-                    {usuarios.map(dado => (
-                        <UsuarioInfo key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>
-                            <ImgPerfil src={`http://localhost:3333/uploads/${dado.FOTOPERFIL}`} alt={dado.NOMECOMPLETO} />
-                            <NomeUsuario>{dado.NOMEUSUARIO}</NomeUsuario>
-                            <NomeCompleto>{dado.NOMECOMPLETO}</NomeCompleto>
-                        </UsuarioInfo> 
-                    ))}
-                </ListaSeg>
-                <Footer></Footer>
-            </Container>
-        </>
+            <ListaSeg>
+                {usuarios.map(dado => (
+                    <UsuarioInfo key={dado.ID} onClick={() => navigate(`/usuario/${dado.NOMEUSUARIO}`)}>
+                        <ImgPerfil src={`http://localhost:3333/uploads/${dado.FOTOPERFIL}`} alt={dado.NOMECOMPLETO} />
+                        <NomeUsuario>{dado.NOMEUSUARIO}</NomeUsuario>
+                        <NomeCompleto>{dado.NOMECOMPLETO}</NomeCompleto>
+                    </UsuarioInfo>
+                ))}
+            </ListaSeg>
+            <Footer></Footer>
+        </Container>
     )
-
 }
 export default Lista;

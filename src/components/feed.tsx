@@ -6,8 +6,8 @@ import type { Posts } from "./criarPost.ts";
 
 function Feed() {
   const fotoPerfil = localStorage.getItem("usuario-foto");
-
   const [postagens, setPostagens] = useState<Posts[]>([]);
+
   const postagensUsuarios = async () => {
     const idUsuario = localStorage.getItem("usuario-id")
     try {
@@ -20,40 +20,36 @@ function Feed() {
     } catch (error) {
       console.error("Unexpected error!", error);
     }
-  };
+  }
 
   useEffect(() => {
-      postagensUsuarios();
-    }, [])
+    postagensUsuarios();
+  }, [])
   return (
-    <>
-      <Container>
-         <Header>
-            <ImgPerfil src={`http://localhost:3333/uploads/${fotoPerfil}`} alt="Foto de perfil"/>
-          </Header>
-        <FeedUsuarios>
-         
-          <div>
-            {!postagens || postagens.length === 0 ? (
-              <p>Não há postagens novas</p>
-            ) : (
-              <div>
-                {postagens.map((post) => (
-                  <div key={post.FOTO_ID}>
-                    <FotoPost src={`http://localhost:3333/uploads/${post.FOTO_POSTAGEM}`} alt="post" />
-                    <p>{post.LEGENDA_FOTO}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </FeedUsuarios>
-         <Footer></Footer> 
-      </Container>
-    
-    </>
+
+    <Container>
+      <Header>
+        <ImgPerfil src={`http://localhost:3333/uploads/${fotoPerfil}`} alt="Foto de perfil" />
+      </Header>
+      <FeedUsuarios>
+
+        <div>
+          {!postagens || postagens.length === 0 ? (
+            <p>Não há postagens novas</p>
+          ) : (
+            <div>
+              {postagens.map((post) => (
+                <div key={post.FOTO_ID}>
+                  <FotoPost src={`http://localhost:3333/uploads/${post.FOTO_POSTAGEM}`} alt="post" />
+                  <p>{post.LEGENDA_FOTO}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </FeedUsuarios>
+      <Footer></Footer>
+    </Container>
   )
 }
 export default Feed;
-
-

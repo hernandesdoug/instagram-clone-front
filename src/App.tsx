@@ -9,21 +9,19 @@ import CriarPost from "./components/criarPost.tsx";
 
 function App() {
 
-
   return (
-    <>
-     <BrowserRouter>
-     <Routes>
-      <Route path="/" element={<Login />}/>
-      <Route path="/cadastro" element={<Cadastro />}/>
-      <Route path="/usuario/:usuario" element={<Usuario />}/>
-      <Route path="/feed" element={<Feed />}/>
-      <Route path="/pesquisa" element={<Pesquisa />}/>
-      <Route path="/usuario/lista/:tipo" element={<Lista />}/>
-      <Route path="/post" element={<CriarPost />}/>
-     </Routes>
-     </BrowserRouter>
-    </>
+
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/usuario/:usuario" element={<Usuario />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/pesquisa" element={<Pesquisa />} />
+        <Route path="/usuario/lista/:tipo" element={<Lista />} />
+        <Route path="/post" element={<CriarPost />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
