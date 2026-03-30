@@ -13,7 +13,7 @@ function Feed() {
     try {
       const response = await api.get(`/post/segue/${idUsuario}`)
       if (response.status === 200) {
-          setPostagens(response.data)
+        setPostagens(response.data);
       } else {
         console.log("Fail loading data", response.status);
       }
