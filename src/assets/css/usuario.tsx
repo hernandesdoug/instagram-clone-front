@@ -147,7 +147,7 @@ export const LinkSeguidores = styled(Link)`
 export const MenuDropdown = styled.div`
     position: absolute;
     top: 60px;
-    right: 10px;
+    right: 52%;
     background: white;
     border: 1px solid #ccc;
     border-radius: 8px;

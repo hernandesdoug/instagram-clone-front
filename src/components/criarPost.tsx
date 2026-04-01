@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../services/api.ts";
 import { useNavigate } from "react-router-dom";
-import { Container,  Botoes  } from "../assets/css/criarPost.tsx";
+import { Container, Botoes } from "../assets/css/criarPost.tsx";
 
 const CriarPost = () => {
   const [foto, setFoto] = useState<File | null>(null);
@@ -29,6 +29,8 @@ const CriarPost = () => {
       if (response.status === 201) {
         setFoto(null);
         setLegenda("");
+        const usuarioNome = localStorage.getItem("usuario-nome");
+        navigate(`/usuario/${usuarioNome}`);
       }
     } catch (error) {
       console.error("Unexpected error!", error);
@@ -38,26 +40,26 @@ const CriarPost = () => {
   return (
 
     <Container>
-        <div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                setFoto(file);
-              }
-            }}
-          />
-          <textarea
-            value={legenda}
-            onChange={e => setLegenda(e.target.value)}
-          />
-          <Botoes>
-            <button onClick={salvarPost}>Postar</button>
-            <button onClick={cancelaPost}>Cancelar</button>
-          </Botoes>
-        </div>
+      <div>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              setFoto(file);
+            }
+          }}
+        />
+        <textarea
+          value={legenda}
+          onChange={e => setLegenda(e.target.value)}
+        />
+        <Botoes>
+          <button onClick={salvarPost}>Postar</button>
+          <button onClick={cancelaPost}>Cancelar</button>
+        </Botoes>
+      </div>
     </Container>
   );
 }

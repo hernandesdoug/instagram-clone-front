@@ -21,7 +21,7 @@ const handleSenha = async () => {
     }
     try {
         const idUsuario = localStorage.getItem("usuario-id")
-        const response = await api.post(`/user/password/${idUsuario}`, { idUsuario, novaSenha });
+        const response = await api.post(`/user/password/${idUsuario}`, { novaSenha });
         if (response.status === 201) {
             setNovaSenha("");
             setConfirmarSenha("");
