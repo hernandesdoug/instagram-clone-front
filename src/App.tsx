@@ -6,6 +6,7 @@ import Feed from "./components/feed.tsx";
 import Pesquisa from "./components/pesquisa.tsx";
 import Lista from "./components/lista.tsx";
 import CriarPost from "./components/criarPost.tsx";
+import AlteraSenha from "./components/alteraSenha.tsx";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/pesquisa" element={<Pesquisa />} />
         <Route path="/usuario/lista/:tipo" element={<Lista />} />
         <Route path="/post" element={<CriarPost />} />
+        <Route path="/altera-senha" element={<AlteraSenha />} />
       </Routes>
     </BrowserRouter>
   )

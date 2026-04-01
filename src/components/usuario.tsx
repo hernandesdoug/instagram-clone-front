@@ -1,7 +1,7 @@
 import {
     Container, Editar, ImgPerfil, Campo, Botoes, ConteudoPerfil,
     Voltar, BtnLogout, Perfil, Header, Info, Dados, BioUsuario,
-    NomeUsuario, LinkSeguidores, Criar
+    NomeUsuario, LinkSeguidores, Criar, MenuDropdown
 } from "../assets/css/usuario.tsx";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -9,7 +9,7 @@ import api from "../services/api.ts";
 import Footer from "./footer.tsx";
 import type { usuarioProps } from "./usuario.ts";
 import ListarPosts from "./listarPosts.tsx"
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt, FaKey, FaBars } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const Usuario = () => {
@@ -28,6 +28,7 @@ const Usuario = () => {
     const [seguidores, setNumSeguidores] = useState<number>(0);
     const [seguindo, setNumSeguindo] = useState<number>(0);
     const [isVisitando, setIsVisitando] = useState<boolean>(false);
+    const [menuAberto, setMenuAberto] = useState(false);
     const usuarioLogado = localStorage.getItem("usuario-nome");
     const params = useParams();
     const navigate = useNavigate();
@@ -165,7 +166,21 @@ const Usuario = () => {
                         {usuarioLogado && isVisitando && <Voltar to={"/feed"}></Voltar>}
                         {usuarioLogado && !isVisitando && <Criar to={"/post"}></Criar>}
                         <strong>{nomeUsuario}</strong>
-                        <BtnLogout onClick={logoutPerfil}><FaSignOutAlt /></BtnLogout>
+
+                        <button onClick={() => setMenuAberto(!menuAberto)}>
+                            <FaBars />
+                        </button>
+                        {menuAberto && (
+                            <MenuDropdown>
+                                <button onClick={() => navigate("/altera-senha")}>
+                                    <FaKey /> Alterar Senha
+                                </button>
+                                <BtnLogout onClick={logoutPerfil}>
+                                    <FaSignOutAlt />
+                                </BtnLogout>
+                            </MenuDropdown>
+                        )}
+
                     </Header>
 
                     <Perfil>

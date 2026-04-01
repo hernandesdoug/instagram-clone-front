@@ -142,3 +142,25 @@ export const LinkSeguidores = styled(Link)`
     text-decoration: none;
     color: #000;
 `;
+
+export const MenuDropdown = styled.div`
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+`;
